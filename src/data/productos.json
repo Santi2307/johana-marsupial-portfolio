@@ -1,0 +1,145 @@
+{
+  "productos": [
+    {
+      "id": "ref-3862",
+      "referencia": "REF-3862",
+      "nombre": "Sandalia Ana",
+      "categoria": "zapatos",
+      "subcategoria": "sandalias",
+      "descripcion": "Sandalia plana en cuero con nudo frontal. Elegante y cómoda para uso diario.",
+      "colores": [
+        { "nombre": "Rosa", "hex": "#F8B4C4" },
+        { "nombre": "Beige", "hex": "#E8D5C4" },
+        { "nombre": "Negro", "hex": "#1A1A1A" }
+      ],
+      "tallas": [35, 36, 37, 38, 39, 40],
+      "material": "Cuero natural — hecho en Colombia",
+      "coleccion": "Otoño 2026",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3862.jpg"]
+    },
+    {
+      "id": "ref-3873",
+      "referencia": "REF-3873",
+      "nombre": "Sandalia Amarilla",
+      "categoria": "zapatos",
+      "subcategoria": "sandalias",
+      "descripcion": "Sandalia amarilla con detalle en tira frontal. Perfecta para el verano.",
+      "colores": [{ "nombre": "Amarillo", "hex": "#F4D047" }],
+      "tallas": [35, 36, 37, 38, 39],
+      "material": "Cuero natural",
+      "coleccion": "Verano 2025",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3873.jpg"]
+    },
+    {
+      "id": "ref-3820",
+      "referencia": "REF-3820",
+      "nombre": "Sandalia Deportiva Fucsia",
+      "categoria": "zapatos",
+      "subcategoria": "casual",
+      "descripcion": "Sandalia deportiva con tiras ajustables. Comodidad todo el día.",
+      "colores": [
+        { "nombre": "Fucsia", "hex": "#DC2E7E" },
+        { "nombre": "Negro", "hex": "#1A1A1A" }
+      ],
+      "tallas": [35, 36, 37, 38, 39, 40],
+      "material": "Textil técnico",
+      "coleccion": "Verano 2025",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3820.jpg"]
+    },
+    {
+      "id": "ref-3877",
+      "referencia": "REF-3877",
+      "nombre": "Balerina Plateada",
+      "categoria": "zapatos",
+      "subcategoria": "baletas",
+      "descripcion": "Balerina en plateado metalizado con hebilla ajustable. Elegancia versátil.",
+      "colores": [{ "nombre": "Plateado", "hex": "#C0C0C0" }],
+      "tallas": [35, 36, 37, 38, 39],
+      "material": "Cuero metalizado",
+      "coleccion": "Otoño 2026",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3877.jpg"]
+    },
+    {
+      "id": "ref-3878",
+      "referencia": "REF-3878",
+      "nombre": "Balerina Verde",
+      "categoria": "zapatos",
+      "subcategoria": "baletas",
+      "descripcion": "Balerina puntera en verde vibrante con detalle en tira.",
+      "colores": [{ "nombre": "Verde", "hex": "#2D8659" }],
+      "tallas": [35, 36, 37, 38, 39],
+      "material": "Cuero natural",
+      "coleccion": "Primavera 2026",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3878.jpg"]
+    },
+    {
+      "id": "ref-3830",
+      "referencia": "REF-3830",
+      "nombre": "Plataforma Marina",
+      "categoria": "zapatos",
+      "subcategoria": "plataformas",
+      "descripcion": "Plataforma en azul marino con tiras cruzadas. Altura cómoda para todo el día.",
+      "colores": [{ "nombre": "Azul Marino", "hex": "#1E3A5F" }],
+      "tallas": [35, 36, 37, 38, 39, 40],
+      "material": "Cuero sintético premium",
+      "coleccion": "Verano 2025",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3830.jpg"]
+    },
+    {
+      "id": "ref-3881",
+      "referencia": "REF-3881",
+      "nombre": "Plataforma Amarilla",
+      "categoria": "zapatos",
+      "subcategoria": "plataformas",
+      "descripcion": "Plataforma en amarillo brillante con detalle frontal. Statement piece.",
+      "colores": [{ "nombre": "Amarillo", "hex": "#F4D047" }],
+      "tallas": [35, 36, 37, 38, 39],
+      "material": "Cuero natural texturizado",
+      "coleccion": "Verano 2025",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3881.jpg"]
+    },
+    {
+      "id": "ref-3887",
+      "referencia": "REF-3887",
+      "nombre": "Zapato Turquesa",
+      "categoria": "zapatos",
+      "subcategoria": "tacones",
+      "descripcion": "Zapato cerrado en turquesa con detalles calados. Único y elegante.",
+      "colores": [{ "nombre": "Turquesa", "hex": "#2D9B93" }],
+      "tallas": [35, 36, 37, 38, 39],
+      "material": "Cuero natural",
+      "coleccion": "Primavera 2026",
+      "destacado": true,
+      "fotos": ["/productos/zapatos/ref-3887.jpg"]
+    }
+  ],
+  "categorias": [
+    { "id": "todos", "nombre": "Todos", "descripcion": "Toda la colección" },
+    { "id": "zapatos", "nombre": "Zapatos", "descripcion": "Calzado femenino" },
+    {
+      "id": "bolsos",
+      "nombre": "Bolsos",
+      "descripcion": "Carteras y bandoleras"
+    },
+    {
+      "id": "accesorios",
+      "nombre": "Accesorios",
+      "descripcion": "Complementos"
+    }
+  ],
+  "subcategorias_zapatos": [
+    { "id": "sandalias", "nombre": "Sandalias" },
+    { "id": "baletas", "nombre": "Baletas" },
+    { "id": "plataformas", "nombre": "Plataformas" },
+    { "id": "tacones", "nombre": "Tacones" },
+    { "id": "casual", "nombre": "Casual" },
+    { "id": "botas", "nombre": "Botas" }
+  ]
+}
