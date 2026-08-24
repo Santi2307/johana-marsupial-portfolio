@@ -29,7 +29,7 @@ export const HeroSection = () => {
           transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.1 }}
           className="text-5xl font-normal leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl"
         >
-          Hola, soy <span className="italic">Johana.</span>
+          Hola, soy <span className="text-white">Johana.</span>
         </motion.h1>
 
         {/* Bio */}
@@ -39,8 +39,7 @@ export const HeroSection = () => {
           transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.3 }}
           className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg"
         >
-          Fundadora y Directora Creativa de Calzado Marsupial. Diseño calzado
-          femenino desde Bucaramanga, Colombia — piel para tu piel.
+          Fundadora y Directora Creativa de Calzado Marsupial.
         </motion.p>
 
         {/* CTA */}
@@ -51,10 +50,10 @@ export const HeroSection = () => {
           className="mt-10 flex justify-center"
         >
           <a
-            href="#about"
+            href="#catalogo"
             className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-marsupial-purple transition-all hover:gap-3 hover:shadow-xl hover:shadow-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           >
-            Conoce mi historia
+            Conoce nuestro catalogo
             <ArrowUpRight
               size={16}
               className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

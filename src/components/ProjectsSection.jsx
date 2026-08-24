@@ -44,7 +44,7 @@ export const ProjectsSection = () => {
                 transition={{ duration: 0.5 }}
                 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
               >
-                <span className="text-marsupial-purple">03</span> / catálogo
+                <span className="text-marsupial-purple">04</span> / catálogo
               </motion.p>
               <motion.h2
                 id="catalogo-heading"

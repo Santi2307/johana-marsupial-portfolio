@@ -392,7 +392,7 @@ const SearchInput = ({ value, onChange }) => (
                         transition={{ duration: 0.5 }}
                         className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
                       >
-                        <span className="text-marsupial-purple"></span> 03 / skills
+
                       </motion.p>
         </motion.button>
       )}
@@ -475,7 +475,7 @@ export const SkillsSection = () => {
               transition={{ duration: 0.5 }}
               className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
             >
-              <span className="text-white">03</span> / skills
+              <span className="text-marsupial-purple">03</span> / Referencias
             </motion.p>
             <motion.h2
               id="skills-heading"

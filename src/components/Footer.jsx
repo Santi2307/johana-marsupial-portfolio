@@ -54,7 +54,8 @@ export const Footer = () => {
           <span>
             <span className="tabular-nums text-white">© {year}</span>
             <span className="mx-3 opacity-40">/</span>
-            Construido y Diseñado Por Johana Sanchez Pulido
+            Johana Sanchez Pulido. Diseñado y desarrollado por la autora. Todos
+            los derechos reservados.
           </span>
 
           <button

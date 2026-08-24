@@ -20,10 +20,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 /* ─────────────────────────── Content ─────────────────────────── */
 
 const PHOTOS = [
-  { src: "/images/santi1.jpeg" },
-  { src: "/images/santi2.jpeg" },
-  { src: "/images/santi3.jpeg" },
-  { src: "/images/santi4.jpeg" },
+  { src: "/images/johana1.jpeg" },
 ];
 
 
@@ -393,7 +390,7 @@ export const AboutSection = () => {
               transition={{ duration: 0.5 }}
               className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
             >
-              <span className="text-white">02</span> / about
+              <span className="text-marsupial-purple">02</span> / about
             </motion.p>
             <motion.h2
               id="about-heading"
