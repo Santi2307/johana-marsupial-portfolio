@@ -28,9 +28,7 @@ const PHOTOS = [
 
 
 const BIO = [
-  "I'm Santiago Delgado, a recent Computer Systems Technology graduate from Seneca Polytechnic in Toronto. I troubleshoot and automate systems with Linux, Ansible, and Docker, and I build clean React interfaces on top of them.",
-  "My focus is working in environments people work in feel quieter, faster, and more reliable — whether that's a network rack, a customer's laptop, or a web app. I think the best technology is the kind that disappears.",
-  "I moved from Colombia to Canada in 2023 to study, and I've stayed because Toronto has a quiet seriousness about building things well. I want to keep doing that here.",
+  "Hola mi nombre es Johana, soy la Directora Comercial de Marsupial. Marsupial nace con el proposito y la mision de ofrecer comodidad en cada paso, mientras la mujer se siente representada. Nuestra historia nace desde hace mas de 20 años con la union entre dos hermanos.",
 ];
 
 const SKILLS = [
@@ -404,7 +402,7 @@ export const AboutSection = () => {
               transition={{ duration: 0.7, ease: EASE_OUT }}
               className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-5xl"
             >
-              About Me
+              Acerca de
             </motion.h2>
           </div>
 
@@ -415,7 +413,7 @@ export const AboutSection = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="hidden max-w-xs text-right text-xs leading-relaxed text-muted-foreground md:block"
           >
-            Get to know the person behind the screen. 
+            Get to know the person behind the screen.
           </motion.div>
         </div>
 
@@ -454,19 +452,11 @@ export const AboutSection = () => {
                 href="#contact"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-all hover:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40"
               >
-                Get in touch
+                Contactame
                 <ArrowUpRight
                   size={14}
                   className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
-              </a>
-              <a
-                href="/Santiago_Delgado_Resume.pdf"
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-transparent px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
-              >
-                <Download size={14} aria-hidden="true" />
-                Download CV
               </a>
             </motion.div>
           </div>

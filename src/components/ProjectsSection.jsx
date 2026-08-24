@@ -99,7 +99,7 @@ export const ProjectsSection = () => {
               onClick={() => setCatalogoOpen(true)}
               className="group inline-flex items-center gap-3 rounded-full bg-marsupial-purple px-8 py-4 text-sm font-medium text-white transition-all hover:gap-4 hover:bg-marsupial-purple-soft hover:shadow-xl hover:shadow-marsupial-purple/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/40"
             >
-              Ver toda la colección
+              Ver nuestro Catalogo
               <ArrowRight
                 size={16}
                 className="transition-transform group-hover:translate-x-1"
