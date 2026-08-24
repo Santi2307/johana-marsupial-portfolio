@@ -71,7 +71,7 @@ const Wordmark = () => (
     className="group inline-flex items-baseline gap-0.5 text-lg font-bold uppercase tracking-[0.18em] text-marsupial-purple transition-opacity hover:opacity-70"
     aria-label="Johana Sánchez — Marsupial"
   >
-    <span>Johana SANCHEZ</span>
+    <span>Johana</span>
   </a>
 );
 

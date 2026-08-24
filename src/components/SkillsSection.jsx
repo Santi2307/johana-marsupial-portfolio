@@ -387,13 +387,13 @@ const SearchInput = ({ value, onChange }) => (
         >
           <X size={12} />
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
-          >
-            <span className="text-white">03</span> / skills
-          </motion.p>
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={inView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.5 }}
+                        className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
+                      >
+                        <span className="text-marsupial-purple"></span> 03 / skills
+                      </motion.p>
         </motion.button>
       )}
     </AnimatePresence>
