@@ -1,312 +1,130 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpRight,
-  Command,
-  CornerDownLeft,
-  Menu,
-  Search,
-  X,
-} from "lucide-react";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
 
-/* ═══════════════════════════════════════════════════════════════════════
-   CONFIG
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ─────────────────────────── Navegación ─────────────────────────── */
 
 const navItems = [
-  {
-    name: "Home",
-    href: "#hero",
-    index: "01",
-    shortcut: "1",
-    description: "Welcome page",
-  },
-  {
-    name: "About",
-    href: "#about",
-    index: "02",
-    shortcut: "2",
-    description: "My story",
-  },
-  {
-    name: "Skills",
-    href: "#skills",
-    index: "03",
-    shortcut: "3",
-    description: "Tech stack",
-  },
-  {
-    name: "Projects",
-    href: "#projects",
-    index: "04",
-    shortcut: "4",
-    description: "Selected work",
-  },
-  {
-    name: "Contact",
-    href: "#contact",
-    index: "05",
-    shortcut: "5",
-    description: "Get in touch",
-  },
+  { name: "Inicio", href: "#hero", index: "01" },
+  { name: "Acerca de", href: "#about", index: "02" },
+  { name: "Catálogo", href: "#catalogo", index: "03" },
+  { name: "Referencias", href: "#referencias", index: "04" },
+  { name: "Contacto", href: "#contact", index: "05" },
 ];
 
-const SPRING_FAST = { type: "spring", stiffness: 400, damping: 32 };
-const SPRING_MEDIUM = { type: "spring", stiffness: 260, damping: 28 };
-const EASE_VERCEL = [0.32, 0.72, 0, 1];
+/* ─────────────────────────── Hooks ─────────────────────────── */
 
-/* ═══════════════════════════════════════════════════════════════════════
-   HOOKS
-   ═══════════════════════════════════════════════════════════════════════ */
+const useScrollDirection = () => {
+  const [state, setState] = useState({ dir: "up", scrolledPast: 0 });
+  const last = useRef(0);
 
-/**
- * Detects scroll direction with a small threshold to avoid jitter at the top.
- * Returns "up" | "down" | null.
- */
-const useScrollDirection = (threshold = 6) => {
-  const [direction, setDirection] = useState(null);
   useEffect(() => {
-    let lastY = window.scrollY;
-    let ticking = false;
     const onScroll = () => {
       const y = window.scrollY;
-      if (!ticking && Math.abs(y - lastY) >= threshold) {
-        window.requestAnimationFrame(() => {
-          setDirection(y > lastY ? "down" : "up");
-          lastY = y;
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setState({
+        dir: y > last.current && y > 80 ? "down" : "up",
+        scrolledPast: y,
+      });
+      last.current = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [threshold]);
-  return direction;
+  }, []);
+
+  return state;
 };
 
-/**
- * Scrollspy via IntersectionObserver. Cheap, runs on the main thread but
- * driven by browser layout passes rather than scroll events.
- */
-const useActiveSection = (items) => {
-  const [active, setActive] = useState(items[0].href.substring(1));
+const useActiveSection = () => {
+  const [active, setActive] = useState("#hero");
+
   useEffect(() => {
-    const sections = items
-      .map((i) => document.getElementById(i.href.substring(1)))
+    const targets = navItems
+      .map((n) => document.querySelector(n.href))
       .filter(Boolean);
-    if (!sections.length) return;
+
+    if (!targets.length) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => e.isIntersecting && setActive(e.target.id));
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(`#${entry.target.id}`);
+          }
+        });
       },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
     );
-    sections.forEach((s) => observer.observe(s));
+
+    targets.forEach((t) => observer.observe(t));
     return () => observer.disconnect();
-  }, [items]);
+  }, []);
+
   return active;
 };
 
-/**
- * Global keyboard map:
- *   - ⌘K / Ctrl+K       → open command palette
- *   - 1..5              → jump to section
- *   - g then 1..5       → "g h" "g a" style two-step shortcut (vim leader)
- *
- * Ignored while typing in inputs/textareas/contentEditable.
- */
-const useKeyboardNav = ({ onOpenPalette, onJump, paletteOpen }) => {
-  useEffect(() => {
-    let leaderTimeout = null;
-    let waitingForLeader = false;
-
-    const isTypingTarget = (target) =>
-      target.tagName === "INPUT" ||
-      target.tagName === "TEXTAREA" ||
-      target.isContentEditable;
-
-    const onKey = (e) => {
-      if (isTypingTarget(e.target)) return;
-
-      // ⌘K / Ctrl+K — palette
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        onOpenPalette();
-        return;
-      }
-      if (paletteOpen) return;
-
-      // Leader: press "g" then a digit within 1s
-      if (!waitingForLeader && e.key.toLowerCase() === "g") {
-        waitingForLeader = true;
-        leaderTimeout = setTimeout(() => {
-          waitingForLeader = false;
-        }, 1000);
-        return;
-      }
-
-      // Digit shortcuts (with or without leader)
-      const n = parseInt(e.key, 10);
-      if (n >= 1 && n <= navItems.length) {
-        e.preventDefault();
-        onJump(navItems[n - 1]);
-        if (waitingForLeader) {
-          clearTimeout(leaderTimeout);
-          waitingForLeader = false;
-        }
-      }
-    };
-
-    window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      if (leaderTimeout) clearTimeout(leaderTimeout);
-    };
-  }, [onOpenPalette, onJump, paletteOpen]);
-};
-
-/**
- * Tracks the bounding rect of any DOM element relative to a container,
- * recomputing on resize and on layout-affecting state changes.
- *
- * Used to drive the magnetic underline indicator that slides between
- * active nav items.
- */
-const useElementRect = (ref, containerRef, deps = []) => {
-  const [rect, setRect] = useState(null);
-  useLayoutEffect(() => {
-    const measure = () => {
-      const el = ref.current;
-      const containerEl = containerRef.current;
-      if (!el || !containerEl) return;
-      const elBox = el.getBoundingClientRect();
-      const cBox = containerEl.getBoundingClientRect();
-      setRect({
-        left: elBox.left - cBox.left,
-        width: elBox.width,
-        height: elBox.height,
-      });
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-  return rect;
-};
-
-/* ═══════════════════════════════════════════════════════════════════════
-   SECTION PREFETCH — gentle scroll-into-view on hover
-   ═══════════════════════════════════════════════════════════════════════
-   Touching a link with the cursor causes the target section to scroll
-   into view at the very bottom of the viewport — a subtle "pre-warm" that
-   makes the click feel instant because the section has already started
-   compositing.
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const prefetchSection = (href) => {
-  const id = href.startsWith("#") ? href.substring(1) : href;
-  const el = document.getElementById(id);
-  if (!el) return;
-  // We don't actually scroll — we just hint to the browser to render the
-  // section, which has the side effect of priming any images/iframes inside.
-  // The dataset attribute is read by the section's own intersection observer
-  // to start any one-time setup work.
-  el.dataset.prefetched = "true";
-};
-
-/* ═══════════════════════════════════════════════════════════════════════
-   SCROLL PROGRESS BAR — hairline indicator under the navbar
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const ScrollProgressBar = () => {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 180,
-    damping: 28,
-    mass: 0.25,
-  });
-  return (
-    <motion.div
-      aria-hidden
-      style={{ scaleX, transformOrigin: "0% 50%" }}
-      className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-foreground/80"
-    />
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════════════
-   WORDMARK — monospace name + status dot, no logo box
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ─────────────────────────── Wordmark (logo) ─────────────────────────── */
 
 const Wordmark = () => (
-  <div className="flex items-center gap-2">
-    <span className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-foreground">
-      Santiago Delgado
-    </span>
-  </div>
+  <a
+    href="#hero"
+    className="group inline-flex items-baseline gap-0.5 text-lg font-bold uppercase tracking-[0.18em] text-marsupial-purple transition-opacity hover:opacity-70"
+    aria-label="Johana Sánchez — Marsupial"
+  >
+    <span>Johana SANCHEZ</span>
+  </a>
 );
 
-/* ═══════════════════════════════════════════════════════════════════════
-   DESKTOP NAV — index-prefixed links + magnetic underline indicator
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ─────────────────────────── Desktop nav link ─────────────────────────── */
 
 const DesktopNavLink = ({ item, isActive, linkRef }) => (
   <a
     ref={linkRef}
     href={item.href}
-    onMouseEnter={() => prefetchSection(item.href)}
-    onFocus={() => prefetchSection(item.href)}
     aria-current={isActive ? "location" : undefined}
     className={cn(
-      "group relative inline-flex items-baseline gap-1.5 px-2 py-1 font-mono text-[13px] transition-colors",
+      "group relative inline-flex items-baseline gap-2 px-4 py-2 text-sm font-medium transition-colors",
       isActive
-        ? "text-foreground"
-        : "text-muted-foreground hover:text-foreground",
+        ? "text-marsupial-purple"
+        : "text-marsupial-purple/50 hover:text-marsupial-purple",
     )}
   >
     <span
       className={cn(
-        "text-[10px] tabular-nums transition-opacity",
-        isActive ? "text-foreground/40" : "text-muted-foreground/50",
+        "font-mono text-[10px] transition-colors",
+        isActive
+          ? "text-marsupial-purple/70"
+          : "text-marsupial-purple/30 group-hover:text-marsupial-purple/60",
       )}
     >
       {item.index}
     </span>
-    <span className="font-medium tracking-tight">
-      {item.name.toLowerCase()}
-    </span>
+    <span>{item.name}</span>
   </a>
 );
 
-const DesktopNav = ({ activeSection }) => {
+/* ─────────────────────────── Desktop nav (with sliding underline) ─────────────────────────── */
+
+const DesktopNav = ({ activeHref }) => {
   const containerRef = useRef(null);
   const linkRefs = useRef({});
+  const [underline, setUnderline] = useState({ left: 0, width: 0, opacity: 0 });
 
-  // Ensure a ref exists for each item.
-  navItems.forEach((item) => {
-    if (!linkRefs.current[item.href]) {
-      linkRefs.current[item.href] = { current: null };
+  useEffect(() => {
+    const el = linkRefs.current[activeHref];
+    const container = containerRef.current;
+    if (!el || !container) {
+      setUnderline((u) => ({ ...u, opacity: 0 }));
+      return;
     }
-  });
-
-  const activeHref = `#${activeSection}`;
-  const activeRect = useElementRect(
-    linkRefs.current[activeHref] ?? { current: null },
-    containerRef,
-    [activeSection],
-  );
+    const elRect = el.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    setUnderline({
+      left: elRect.left - containerRect.left,
+      width: elRect.width,
+      opacity: 1,
+    });
+  }, [activeHref]);
 
   return (
     <nav
@@ -318,460 +136,144 @@ const DesktopNav = ({ activeSection }) => {
         <DesktopNavLink
           key={item.href}
           item={item}
-          isActive={activeSection === item.href.substring(1)}
-          linkRef={linkRefs.current[item.href]}
+          isActive={activeHref === item.href}
+          linkRef={(el) => (linkRefs.current[item.href] = el)}
         />
       ))}
 
-      {/* Magnetic underline indicator */}
-      <AnimatePresence>
-        {activeRect && (
-          <motion.span
-            aria-hidden
-            layoutId="nav-underline"
-            initial={false}
-            animate={{
-              x: activeRect.left,
-              width: activeRect.width,
-            }}
-            transition={SPRING_FAST}
-            style={{ height: 1 }}
-            className="pointer-events-none absolute bottom-0 left-0 bg-foreground"
-          />
-        )}
-      </AnimatePresence>
+      <motion.span
+        aria-hidden
+        animate={underline}
+        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+        className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-marsupial-purple"
+      />
     </nav>
   );
 };
 
-/* ═══════════════════════════════════════════════════════════════════════
-   COMMAND PALETTE — fuzzy search, keyboard nav, recently used
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ─────────────────────────── Mobile drawer ─────────────────────────── */
 
-const fuzzyMatch = (query, text) => {
-  const q = query.toLowerCase();
-  const t = text.toLowerCase();
-  // Direct substring match wins.
-  if (t.includes(q)) return true;
-  // Subsequence match — characters in order, not necessarily adjacent.
-  let qi = 0;
-  for (let ti = 0; ti < t.length && qi < q.length; ti++) {
-    if (t[ti] === q[qi]) qi++;
-  }
-  return qi === q.length;
-};
+const MobileDrawer = ({ open, onClose, activeHref }) => (
+  <AnimatePresence>
+    {open && (
+      <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={onClose}
+          className="fixed inset-0 z-40 bg-marsupial-purple/60 backdrop-blur-sm md:hidden"
+          aria-hidden
+        />
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="fixed right-0 top-0 z-50 h-full w-full max-w-sm bg-white p-8 shadow-2xl md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
+          <div className="flex items-center justify-between">
+            <Wordmark />
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close menu"
+              className="rounded-full p-2 text-marsupial-purple transition-colors hover:bg-marsupial-purple/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/40"
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-const CommandPalette = ({ isOpen, onClose }) => {
-  const [query, setQuery] = useState("");
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  const inputRef = useRef(null);
+          <nav className="mt-12 flex flex-col gap-1" aria-label="Mobile">
+            {navItems.map((item) => {
+              const isActive = activeHref === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={onClose}
+                  className={cn(
+                    "flex items-baseline gap-3 border-b border-marsupial-purple/10 py-4 text-lg font-medium transition-colors",
+                    isActive
+                      ? "text-marsupial-purple"
+                      : "text-marsupial-purple/60 hover:text-marsupial-purple",
+                  )}
+                >
+                  <span className="font-mono text-xs text-marsupial-purple/40">
+                    {item.index}
+                  </span>
+                  <span>{item.name}</span>
+                </a>
+              );
+            })}
+          </nav>
 
-  const results = useMemo(() => {
-    const q = query.trim();
-    if (!q) return navItems;
-    return navItems.filter(
-      (i) => fuzzyMatch(q, i.name) || fuzzyMatch(q, i.description),
-    );
-  }, [query]);
-
-  useEffect(() => {
-    if (isOpen) {
-      setQuery("");
-      setSelectedIdx(0);
-      const t = setTimeout(() => inputRef.current?.focus(), 50);
-      return () => clearTimeout(t);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (e) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onClose();
-      }
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        setSelectedIdx((i) => Math.min(i + 1, results.length - 1));
-      }
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-        setSelectedIdx((i) => Math.max(i - 1, 0));
-      }
-      if (e.key === "Enter" && results[selectedIdx]) {
-        e.preventDefault();
-        window.location.hash = results[selectedIdx].href;
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen, results, selectedIdx, onClose]);
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 z-[60] bg-background/70 backdrop-blur-md"
-          />
-          <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: EASE_VERCEL }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Command palette"
-            className="fixed left-1/2 top-[18vh] z-[70] w-[92%] max-w-xl -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-card/98 shadow-2xl shadow-black/40 backdrop-blur-2xl"
-          >
-            {/* Input row */}
-            <div className="flex items-center gap-3 border-b border-border px-4 py-3">
-              <Search size={14} className="text-muted-foreground" />
-              <input
-                ref={inputRef}
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setSelectedIdx(0);
-                }}
-                placeholder="Jump to section..."
-                className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/60 outline-none"
-              />
-              <kbd className="rounded border border-border bg-background/40 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                esc
-              </kbd>
-            </div>
-
-            {/* Results */}
-            <div className="max-h-80 overflow-y-auto p-1.5">
-              {results.length === 0 ? (
-                <div className="px-3 py-10 text-center text-sm text-muted-foreground">
-                  no matches for "
-                  <span className="font-mono text-foreground/80">{query}</span>"
-                </div>
-              ) : (
-                results.map((item, i) => {
-                  const isSelected = i === selectedIdx;
-                  return (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={onClose}
-                      onMouseEnter={() => setSelectedIdx(i)}
-                      className={cn(
-                        "relative grid grid-cols-[auto_1fr_auto_auto] items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
-                        isSelected
-                          ? "bg-foreground/5 text-foreground"
-                          : "text-muted-foreground hover:bg-foreground/[0.03]",
-                      )}
-                    >
-                      {isSelected && (
-                        <motion.span
-                          layoutId="palette-cursor"
-                          transition={SPRING_FAST}
-                          className="absolute inset-y-1 left-0 w-0.5 rounded-full bg-foreground"
-                        />
-                      )}
-                      <span className="font-mono text-[10px] tabular-nums text-muted-foreground/60">
-                        {item.index}
-                      </span>
-                      <span className="font-mono font-medium text-foreground/90">
-                        {item.name.toLowerCase()}
-                        <span className="ml-2 text-xs text-muted-foreground">
-                          {item.description}
-                        </span>
-                      </span>
-                      <kbd className="rounded border border-border bg-background/40 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                        g {item.shortcut}
-                      </kbd>
-                      {isSelected ? (
-                        <CornerDownLeft
-                          size={12}
-                          className="text-foreground/60"
-                        />
-                      ) : (
-                        <ArrowUpRight
-                          size={12}
-                          className="text-muted-foreground/40"
-                        />
-                      )}
-                    </a>
-                  );
-                })
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="flex items-center justify-between border-t border-border bg-background/30 px-4 py-2 font-mono text-[10px] text-muted-foreground">
-              <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1.5">
-                  <ArrowUp size={9} />
-                  <ArrowDown size={9} />
-                  <span>navigate</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CornerDownLeft size={9} />
-                  <span>open</span>
-                </span>
-              </div>
-              <span className="flex items-center gap-1">
-                <Command size={10} />
-                <span>k</span>
-              </span>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════════════
-   MOBILE DRAWER
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const MobileDrawer = ({ isOpen, onClose, activeSection }) => {
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="md:hidden fixed inset-0 z-40 bg-background/80 backdrop-blur-md"
-          />
-          <motion.aside
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 340, damping: 36 }}
-            role="dialog"
-            aria-modal="true"
-            className="md:hidden fixed top-0 right-0 z-50 h-full w-[78%] max-w-sm overflow-hidden border-l border-border bg-card"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-border px-6 py-5">
-              <div className="flex flex-col gap-0.5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Navigation
-                </span>
-                <span className="font-mono text-[10px] text-muted-foreground/60">
-                  {navItems.length} sections
-                </span>
-              </div>
-              <button
-                onClick={onClose}
-                aria-label="Close menu"
-                className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Items */}
-            <nav className="px-2 py-4">
-              <ul className="flex flex-col">
-                {navItems.map((item, i) => {
-                  const isActive = activeSection === item.href.substring(1);
-                  return (
-                    <motion.li
-                      key={item.href}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.05 + i * 0.04, ...SPRING_MEDIUM }}
-                    >
-                      <a
-                        href={item.href}
-                        onClick={onClose}
-                        aria-current={isActive ? "location" : undefined}
-                        className={cn(
-                          "group flex items-baseline justify-between border-b border-border/60 px-4 py-4 transition-colors last:border-b-0",
-                          isActive
-                            ? "text-foreground"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        <div className="flex items-baseline gap-3">
-                          <span className="font-mono text-[10px] tabular-nums text-muted-foreground/50">
-                            {item.index}
-                          </span>
-                          <span className="font-mono text-lg font-medium tracking-tight">
-                            {item.name.toLowerCase()}
-                          </span>
-                        </div>
-                        <ArrowUpRight
-                          size={14}
-                          className={cn(
-                            "transition-all duration-300",
-                            isActive
-                              ? "translate-x-0 translate-y-0 opacity-100"
-                              : "-translate-x-1 translate-y-1 opacity-0 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100",
-                          )}
-                        />
-                      </a>
-                    </motion.li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            {/* Footer */}
-            <div className="absolute bottom-0 inset-x-0 border-t border-border px-6 py-4 font-mono text-[10px] text-muted-foreground">
-              <div className="flex items-center justify-between">
-                <span>santiago delgado</span>
-                <span className="flex items-center gap-1.5">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  toronto, on
-                </span>
-              </div>
-            </div>
-          </motion.aside>
-        </>
-      )}
-    </AnimatePresence>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════════════
-   SEARCH TRIGGER — desktop "⌘K" pill
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const SearchTrigger = ({ onClick }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-label="Open command palette (⌘K)"
-    className="hidden md:inline-flex items-center gap-2.5 rounded-full border border-border bg-card/40 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
-  >
-    <Search size={11} />
-    <span>search</span>
-    <span className="flex items-center gap-0.5 border-l border-border pl-2 text-muted-foreground/60">
-      <Command size={9} />
-      <span className="text-[10px]">K</span>
-    </span>
-  </button>
+          <div className="mt-12 border-t border-marsupial-purple/10 pt-6">
+            <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/40">
+              Ubicación
+            </p>
+            <p className="text-sm font-medium text-marsupial-purple">
+              Bucaramanga · Colombia
+            </p>
+          </div>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
 );
 
-const MobileMenuButton = ({ isOpen, onClick }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-label={isOpen ? "Close menu" : "Open menu"}
-    aria-expanded={isOpen}
-    className="md:hidden relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/40 text-foreground transition-colors hover:bg-foreground/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
-  >
-    <AnimatePresence mode="wait" initial={false}>
-      {isOpen ? (
-        <motion.span
-          key="x"
-          initial={{ rotate: -90, opacity: 0 }}
-          animate={{ rotate: 0, opacity: 1 }}
-          exit={{ rotate: 90, opacity: 0 }}
-          transition={{ duration: 0.15 }}
-        >
-          <X size={16} />
-        </motion.span>
-      ) : (
-        <motion.span
-          key="menu"
-          initial={{ rotate: 90, opacity: 0 }}
-          animate={{ rotate: 0, opacity: 1 }}
-          exit={{ rotate: -90, opacity: 0 }}
-          transition={{ duration: 0.15 }}
-        >
-          <Menu size={16} />
-        </motion.span>
-      )}
-    </AnimatePresence>
-  </button>
-);
-
-/* ═══════════════════════════════════════════════════════════════════════
-   NAVBAR ROOT
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ─────────────────────────── Main navbar ─────────────────────────── */
 
 export const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPaletteOpen, setIsPaletteOpen] = useState(false);
-  const [scrolledPast, setScrolledPast] = useState(false);
-  const scrollDirection = useScrollDirection();
-  const activeSection = useActiveSection(navItems);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { dir, scrolledPast } = useScrollDirection();
+  const activeHref = useActiveSection();
 
-  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
-  const openPalette = useCallback(() => setIsPaletteOpen(true), []);
-  const closePalette = useCallback(() => setIsPaletteOpen(false), []);
-  const jumpTo = useCallback((item) => {
-    window.location.hash = item.href;
-  }, []);
-
-  useKeyboardNav({
-    onOpenPalette: openPalette,
-    onJump: jumpTo,
-    paletteOpen: isPaletteOpen,
-  });
-
-  useEffect(() => {
-    const onScroll = () => setScrolledPast(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const isHidden = false;
+  const hidden = useMemo(
+    () => dir === "down" && scrolledPast > 100 && !drawerOpen,
+    [dir, scrolledPast, drawerOpen],
+  );
 
   return (
     <>
       <motion.header
-        animate={{ y: isHidden ? -80 : 0 }}
-        transition={{ type: "tween", duration: 0.3, ease: EASE_VERCEL }}
+        initial={false}
+        animate={{ y: hidden ? -80 : 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 32 }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
-          scrolledPast
-            ? "border-b border-border bg-background/75 backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent",
+          "fixed top-0 z-40 w-full transition-all duration-300",
+          scrolledPast > 20
+            ? "border-b border-marsupial-purple/10 bg-white/90 backdrop-blur-xl shadow-sm"
+            : "border-b border-transparent bg-white/50 backdrop-blur-md",
         )}
       >
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
-          {/* Left: wordmark */}
+        <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 md:h-20">
           <Wordmark />
 
-          {/* Center: desktop nav */}
-          <DesktopNav activeSection={activeSection} />
+          <DesktopNav activeHref={activeHref} />
 
-          {/* Right: search + mobile menu */}
           <div className="flex items-center gap-2">
-            <SearchTrigger onClick={openPalette} />
-            <MobileMenuButton
-              isOpen={isMenuOpen}
-              onClick={() => setIsMenuOpen((v) => !v)}
-            />
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open menu"
+              className="rounded-full p-2 text-marsupial-purple transition-colors hover:bg-marsupial-purple/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/40 md:hidden"
+            >
+              <Menu size={20} />
+            </button>
           </div>
         </div>
-
-        {/* Scroll progress hairline */}
-        {scrolledPast && <ScrollProgressBar />}
       </motion.header>
 
       <MobileDrawer
-        isOpen={isMenuOpen}
-        onClose={closeMenu}
-        activeSection={activeSection}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        activeHref={activeHref}
       />
-      <CommandPalette isOpen={isPaletteOpen} onClose={closePalette} />
     </>
   );
 };

@@ -2,21 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  motion,
-  AnimatePresence,
-  useInView,
-  useReducedMotion,
-} from "framer-motion";
-import { FaXTwitter } from "react-icons/fa6";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { FaPinterest, FaWhatsapp } from "react-icons/fa6";
+import { PiStorefront } from "react-icons/pi";
 import {
   Mail,
   Phone,
   MapPin,
   Send,
   Linkedin,
-  Youtube,
-  Github,
   Instagram,
   CheckCircle2,
   Copy,
@@ -24,7 +18,6 @@ import {
   Loader2,
   ArrowLeft,
   ArrowUpRight,
-  Slack,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -33,56 +26,8 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xldwapjy";
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
 /* ═══════════════════════════════════════════════════════════════════════
-   STATUS — time-of-day-aware
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const STATUSES = [
-  { range: [0, 7], key: "sleeping", emoji: "😴", label: "Sleeping" },
-  { range: [7, 9], key: "morning", emoji: "☕", label: "Morning coffee" },
-  { range: [9, 12], key: "available", emoji: "💼", label: "Available" },
-  { range: [12, 13], key: "lunch", emoji: "🍽️", label: "Lunch break" },
-  { range: [13, 17], key: "building", emoji: "💻", label: "Building" },
-  { range: [17, 18], key: "exercising", emoji: "🏋️", label: "At the gym" },
-  { range: [18, 20], key: "studying", emoji: "📚", label: "Studying" },
-  { range: [20, 22], key: "off-duty", emoji: "🎮", label: "Off-duty" },
-  { range: [22, 24], key: "winding-down", emoji: "🌙", label: "Winding down" },
-];
-
-const getStatusForHour = (hour) =>
-  STATUSES.find((s) => hour >= s.range[0] && hour < s.range[1]) || STATUSES[0];
-
-/* ═══════════════════════════════════════════════════════════════════════
    HOOKS
    ═══════════════════════════════════════════════════════════════════════ */
-
-const useCurrentStatus = () => {
-  const [status, setStatus] = useState(() =>
-    getStatusForHour(new Date().getHours()),
-  );
-
-  useEffect(() => {
-    const update = () => {
-      try {
-        const hour = parseInt(
-          new Intl.DateTimeFormat("en-US", {
-            timeZone: "America/Toronto",
-            hour: "numeric",
-            hour12: false,
-          }).format(new Date()),
-          10,
-        );
-        setStatus(getStatusForHour(hour));
-      } catch {
-        setStatus(getStatusForHour(new Date().getHours()));
-      }
-    };
-    update();
-    const id = setInterval(update, 60 * 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  return status;
-};
 
 const useCopy = (resetMs = 1500) => {
   const [copied, setCopied] = useState(false);
@@ -99,82 +44,6 @@ const useCopy = (resetMs = 1500) => {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SLEEPING ZZZ
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const SleepingZzz = () => (
-  <div
-    aria-hidden
-    className="pointer-events-none absolute -right-3 -top-2 h-6 w-6"
-  >
-    {[0, 1, 2].map((i) => (
-      <motion.span
-        key={i}
-        className="absolute left-0 top-0 font-mono text-[9px] font-bold text-foreground/70"
-        animate={{
-          y: [2, -10, -18],
-          x: [0, 3, 7],
-          opacity: [0, 1, 0],
-          scale: [0.5, 1, 1.15],
-          rotate: [0, 6, 14],
-        }}
-        transition={{
-          duration: 2.8,
-          repeat: Infinity,
-          delay: i * 0.85,
-          ease: "easeOut",
-        }}
-      >
-        z
-      </motion.span>
-    ))}
-  </div>
-);
-
-/* ═══════════════════════════════════════════════════════════════════════
-   STATUS LINE
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const StatusLine = () => {
-  const status = useCurrentStatus();
-  const isSleeping = status.key === "sleeping";
-
-  return (
-    <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card/40 px-4 py-2 font-mono text-xs">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={status.key}
-          initial={{ opacity: 0, y: 3 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -3 }}
-          transition={{ duration: 0.3 }}
-          className="flex items-center gap-2.5"
-        >
-          <span className="relative inline-flex h-4 w-4 items-center justify-center">
-            <span
-              className="relative text-sm leading-none"
-              role="img"
-              aria-label={status.label}
-            >
-              {status.emoji}
-            </span>
-            {isSleeping && <SleepingZzz />}
-          </span>
-
-          <span className="font-medium text-foreground">{status.label}</span>
-        </motion.div>
-      </AnimatePresence>
-
-      <span className="h-3 w-px bg-border" aria-hidden />
-
-      <span className="text-muted-foreground">
-        I'll get back asap. Have a great day!
-      </span>
-    </div>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════════════
    CHANNEL ROW
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -183,14 +52,14 @@ const ChannelRow = ({ icon: Icon, label, value, href, copyable = true }) => {
 
   const Inner = (
     <>
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card/40 text-muted-foreground transition-colors group-hover:text-foreground">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-marsupial-purple/20 bg-white text-marsupial-purple transition-colors group-hover:text-marsupial-purple">
         <Icon size={15} aria-hidden="true" />
       </span>
       <span className="flex min-w-0 flex-1 flex-col items-center text-center">
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-marsupial-purple/50">
           {label}
         </span>
-        <span className="truncate text-sm font-medium text-foreground">
+        <span className="truncate text-sm font-medium text-marsupial-purple">
           {value}
         </span>
       </span>
@@ -212,8 +81,8 @@ const ChannelRow = ({ icon: Icon, label, value, href, copyable = true }) => {
           <button
             type="button"
             onClick={() => copy(value)}
-            aria-label={`Copy ${label.toLowerCase()}`}
-            className="shrink-0 rounded-md p-2 text-muted-foreground opacity-0 transition-all hover:bg-foreground/5 hover:text-foreground focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 group-hover:opacity-100"
+            aria-label={`Copiar ${label.toLowerCase()}`}
+            className="shrink-0 rounded-md p-2 text-marsupial-purple/50 opacity-0 transition-all hover:bg-marsupial-purple/10 hover:text-marsupial-purple focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/30 group-hover:opacity-100"
           >
             <AnimatePresence mode="wait" initial={false}>
               {copied ? (
@@ -250,29 +119,29 @@ const ChannelRow = ({ icon: Icon, label, value, href, copyable = true }) => {
    ═══════════════════════════════════════════════════════════════════════ */
 
 const contactFormSchema = z.object({
-  name: z.string().min(1, "Name is required."),
-  email: z.string().email("Please enter a valid email."),
+  name: z.string().min(1, "El nombre es obligatorio."),
+  email: z.string().email("Ingresa un correo válido."),
   message: z
     .string()
-    .min(10, "Message should be at least 10 characters.")
-    .max(2000, "Message is too long."),
+    .min(10, "El mensaje debe tener al menos 10 caracteres.")
+    .max(2000, "El mensaje es demasiado largo."),
 });
 
 const Field = ({ label, hint, error, children }) => (
   <div>
     <div className="mb-1.5 flex items-baseline justify-between">
-      <label className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+      <label className="font-mono text-[10px] uppercase tracking-[0.18em] text-marsupial-purple/60">
         {label}
       </label>
       {hint && (
-        <span className="font-mono text-[10px] tabular-nums text-muted-foreground/60">
+        <span className="font-mono text-[10px] tabular-nums text-marsupial-purple/40">
           {hint}
         </span>
       )}
     </div>
     {children}
     {error && (
-      <p role="alert" className="mt-1.5 font-mono text-[10px] text-destructive">
+      <p role="alert" className="mt-1.5 font-mono text-[10px] text-red-500">
         {error}
       </p>
     )}
@@ -281,9 +150,9 @@ const Field = ({ label, hint, error, children }) => (
 
 const inputClasses = (hasError) =>
   cn(
-    "w-full rounded-md border bg-transparent px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors",
-    "focus:outline-none focus:border-foreground/40",
-    hasError ? "border-destructive/60" : "border-border",
+    "w-full rounded-md border bg-white px-3 py-2.5 text-sm text-marsupial-purple placeholder:text-marsupial-purple/40 transition-colors",
+    "focus:outline-none focus:border-marsupial-purple/60",
+    hasError ? "border-red-400" : "border-marsupial-purple/20",
   );
 
 const ContactForm = ({ onSent }) => {
@@ -308,7 +177,7 @@ const ContactForm = ({ onSent }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          _subject: `New message from ${data.name}`,
+          _subject: `Nuevo mensaje de ${data.name}`,
         }),
       });
 
@@ -317,16 +186,16 @@ const ContactForm = ({ onSent }) => {
         onSent();
       } else {
         toast({
-          title: "Couldn't send your message",
+          title: "No se pudo enviar tu mensaje",
           description:
-            "Something went wrong on our end. Please try again or email me directly.",
+            "Algo salió mal. Intenta de nuevo o escríbeme directamente.",
           variant: "destructive",
         });
       }
     } catch {
       toast({
-        title: "Network error",
-        description: "Check your internet connection and try again.",
+        title: "Error de red",
+        description: "Revisa tu conexión e intenta de nuevo.",
         variant: "destructive",
       });
     }
@@ -335,19 +204,19 @@ const ContactForm = ({ onSent }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field label="Name" error={errors.name?.message}>
+        <Field label="Nombre" error={errors.name?.message}>
           <input
             type="text"
-            placeholder="First Name Last Name"
+            placeholder="Nombre Apellido"
             {...register("name")}
             className={inputClasses(!!errors.name)}
           />
         </Field>
 
-        <Field label="Email" error={errors.email?.message}>
+        <Field label="Correo Electrónico" error={errors.email?.message}>
           <input
             type="email"
-            placeholder="example@gmail.com"
+            placeholder="ejemplo@gmail.com"
             {...register("email")}
             className={inputClasses(!!errors.email)}
           />
@@ -355,17 +224,17 @@ const ContactForm = ({ onSent }) => {
       </div>
 
       <Field
-        label="Message"
+        label="Mensaje"
         hint={`${messageCount} / 2000`}
         error={errors.message?.message}
       >
         <textarea
           rows={6}
-          placeholder="Send me a message."
+          placeholder="Envíame un mensaje..."
           {...register("message")}
           className={cn(
             inputClasses(!!errors.message),
-            "resize-y min-h-[140px] placeholder:text-indigo-400",
+            "resize-y min-h-[140px]",
           )}
         />
       </Field>
@@ -374,18 +243,18 @@ const ContactForm = ({ onSent }) => {
         type="submit"
         disabled={isSubmitting}
         className={cn(
-          "group inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-all hover:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40",
+          "group inline-flex w-full items-center justify-center gap-2 rounded-full bg-marsupial-purple px-5 py-3 text-sm font-medium text-white transition-all hover:gap-3 hover:bg-marsupial-purple-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/40",
           isSubmitting && "cursor-not-allowed opacity-70",
         )}
       >
         {isSubmitting ? (
           <>
             <Loader2 size={14} className="animate-spin" />
-            Sending…
+            Enviando…
           </>
         ) : (
           <>
-            Send message
+            Enviar mensaje
             <Send
               size={14}
               className="transition-transform group-hover:translate-x-0.5"
@@ -412,40 +281,44 @@ const SuccessState = ({ onReset }) => (
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 15 }}
-      className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full border border-foreground/20"
+      className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full border border-marsupial-purple/20"
     >
-      <CheckCircle2 className="h-7 w-7 text-foreground" strokeWidth={1.5} />
+      <CheckCircle2
+        className="h-7 w-7 text-marsupial-purple"
+        strokeWidth={1.5}
+      />
     </motion.div>
 
-    <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-      Status — sent
+    <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
+      Estado — enviado
     </p>
-    <h3 className="mb-3 text-2xl font-semibold tracking-tight">
-      I got your message.
+    <h3 className="mb-3 text-2xl font-semibold tracking-tight text-marsupial-purple">
+      Mensaje recibido.
     </h3>
-    <p className="mb-8 max-w-sm text-sm leading-relaxed text-muted-foreground">
-      Thank you for reaching out. I'll get back to you within asap.
+    <p className="mb-8 max-w-sm text-sm leading-relaxed text-marsupial-purple/70">
+      Gracias por escribirme. Te responderé dentro de las próximas 24 horas —
+      usualmente mucho antes.
     </p>
 
     <button
       type="button"
       onClick={onReset}
-      className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+      className="inline-flex items-center gap-2 rounded-full border border-marsupial-purple/30 px-4 py-2 text-sm font-medium text-marsupial-purple transition-colors hover:bg-marsupial-purple/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/30"
     >
       <ArrowLeft size={13} />
-      Back
+      Enviar otro
     </button>
   </motion.div>
 );
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SOCIAL LINKS
+   SOCIAL LINKS — Con colores de marca al hover
    ═══════════════════════════════════════════════════════════════════════ */
 
 const SOCIAL_LINKS = [
   {
     icon: Linkedin,
-    href: "https://www.linkedin.com/in/santiagodelgado23",
+    href: "https://www.linkedin.com/in/johana-sánchez-pulido-a708b864/",
     label: "LinkedIn",
     brand: {
       bg: "#0A66C2",
@@ -454,18 +327,18 @@ const SOCIAL_LINKS = [
     },
   },
   {
-    icon: Github,
-    href: "https://github.com/Santi2307",
-    label: "GitHub",
+    icon: FaPinterest,
+    href: "https://pinterest.com/marsupialstore/",
+    label: "Pinterest",
     brand: {
-      bg: "#ffffff",
-      text: "#24292f",
-      shadow: "rgba(255, 255, 255, 0.2)",
+      bg: "#E60023",
+      text: "#ffffff",
+      shadow: "rgba(230, 0, 35, 0.35)",
     },
   },
   {
     icon: Instagram,
-    href: "https://www.instagram.com/santiagodelgadosanchez",
+    href: "https://www.instagram.com/marsupialstore",
     label: "Instagram",
     brand: {
       bg: "linear-gradient(45deg, #F58529 0%, #DD2A7B 40%, #8134AF 70%, #515BD4 100%)",
@@ -474,33 +347,23 @@ const SOCIAL_LINKS = [
     },
   },
   {
-    icon: FaXTwitter,
-    href: "https://x.com/Santiagodelga23",
-    label: "X",
+    icon: FaWhatsapp,
+    href: "https://wa.me/573183045429",
+    label: "WhatsApp",
     brand: {
-      bg: "#000000",
+      bg: "#25D366",
       text: "#ffffff",
-      shadow: "rgba(255, 255, 255, 0.15)",
+      shadow: "rgba(37, 211, 102, 0.35)",
     },
   },
   {
-    icon: Slack,
-    href: "https://santiagodelga.slack.com",
-    label: "Slack",
+    icon: PiStorefront,
+    href: "https://marsupial.com.co",
+    label: "Tienda Virtual",
     brand: {
-      bg: "#4A154B",
+      bg: "#3D2C7A",
       text: "#ffffff",
-      shadow: "rgba(74, 21, 75, 0.4)",
-    },
-  },
-  {
-    icon: Youtube,
-    href: "https://www.youtube.com/@santiagodelgadosanchez5131",
-    label: "YouTube",
-    brand: {
-      bg: "#FF0000",
-      text: "#ffffff",
-      shadow: "rgba(255, 0, 0, 0.4)",
+      shadow: "rgba(61, 44, 122, 0.4)",
     },
   },
 ];
@@ -511,7 +374,6 @@ const SOCIAL_LINKS = [
 
 const SocialButton = ({ link }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const reducedMotion = useReducedMotion();
   const Icon = link.icon;
 
   return (
@@ -522,24 +384,24 @@ const SocialButton = ({ link }) => {
       aria-label={link.label}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      whileTap={reducedMotion ? undefined : { scale: 0.97 }}
+      whileTap={{ scale: 0.97 }}
       animate={{
         boxShadow: isHovered
           ? `0 12px 32px -10px ${link.brand.shadow}`
           : "0 0 0 0 transparent",
       }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: EASE_OUT }}
       style={{
         borderColor: isHovered ? "transparent" : undefined,
       }}
-      className="group relative block overflow-hidden rounded-md border border-border text-xs transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+      className="group relative block overflow-hidden rounded-md border border-marsupial-purple/20 bg-white text-xs transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-marsupial-purple/30"
     >
       {/* Brand background layer */}
       <motion.span
         aria-hidden
         initial={false}
         animate={{ opacity: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.35, ease: EASE_OUT }}
         style={{ background: link.brand.bg }}
         className="absolute inset-0"
       />
@@ -548,13 +410,13 @@ const SocialButton = ({ link }) => {
       <motion.span
         animate={{ color: isHovered ? link.brand.text : undefined }}
         transition={{ duration: 0.3 }}
-        className="relative flex items-center justify-between gap-2 px-3 py-2.5 text-foreground"
+        className="relative flex items-center justify-between gap-2 px-3 py-2.5 text-marsupial-purple"
       >
         <span className="flex min-w-0 items-center gap-2">
           <motion.span
             animate={{
-              scale: isHovered && !reducedMotion ? 1.15 : 1,
-              rotate: isHovered && !reducedMotion ? -4 : 0,
+              scale: isHovered ? 1.15 : 1,
+              rotate: isHovered ? -4 : 0,
             }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="flex-shrink-0"
@@ -565,8 +427,8 @@ const SocialButton = ({ link }) => {
         </span>
         <motion.span
           animate={{
-            x: isHovered && !reducedMotion ? 2 : 0,
-            y: isHovered && !reducedMotion ? -2 : 0,
+            x: isHovered ? 2 : 0,
+            y: isHovered ? -2 : 0,
           }}
           transition={{ type: "spring", stiffness: 400, damping: 22 }}
           className="flex-shrink-0"
@@ -591,7 +453,7 @@ export const ContactSection = () => {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative overflow-hidden px-4 py-24 md:py-32"
+      className="relative overflow-hidden bg-white px-4 py-24 md:py-32"
       aria-labelledby="contact-heading"
     >
       <div className="container mx-auto max-w-6xl">
@@ -602,18 +464,18 @@ export const ContactSection = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5 }}
-              className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+              className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
             >
-              <span className="text-white">05</span> / contact
+              <span className="text-marsupial-purple">05</span> / contacto
             </motion.p>
             <motion.h2
               id="contact-heading"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, ease: EASE_OUT }}
-              className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-5xl"
+              className="text-4xl font-bold leading-[1.05] tracking-tight text-marsupial-purple md:text-6xl"
             >
-              Let's Build Together.
+              Contáctame.
             </motion.h2>
           </div>
 
@@ -621,22 +483,12 @@ export const ContactSection = () => {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="hidden max-w-xs text-right text-xs leading-relaxed text-muted-foreground md:block"
+            className="hidden max-w-xs text-right text-xs leading-relaxed text-marsupial-purple/60 md:block"
           >
-            Want to collaborate? Have a question? Just come by and say hi. I am
-            always open to discuss with new people ideas and new opportunities.
+            ¿Quieres colaborar? ¿Tienes una pregunta? Escríbeme y con gusto te
+            respondo lo más pronto posible.
           </motion.div>
         </div>
-
-        {/* ─── Status line ─── */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mb-16 flex justify-start"
-        >
-          <StatusLine />
-        </motion.div>
 
         {/* ─── Two-column body ─── */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-16">
@@ -648,37 +500,37 @@ export const ContactSection = () => {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="md:sticky md:top-24"
             >
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                my socials
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
+                Información personal
               </p>
 
-              <div className="divide-y divide-border border-t border-b border-border">
+              <div className="divide-y divide-marsupial-purple/10 border-t border-b border-marsupial-purple/10">
                 <ChannelRow
                   icon={Mail}
-                  label="Email"
-                  value="santiagodelgadosanchez9@gmail.com"
-                  href="mailto:santiagodelgadosanchez9@gmail.com"
+                  label="Correo Electrónico"
+                  value="johana@marsupial.com.co"
+                  href="mailto:johana@marsupial.com.co"
                   copyable
                 />
                 <ChannelRow
                   icon={Phone}
-                  label="Phone"
-                  value="+1 (437) 661-6843"
-                  href="tel:+14376616843"
+                  label="Teléfono"
+                  value="+57 (317) 438-5716"
+                  href="tel:+573174385716"
                   copyable
                 />
                 <ChannelRow
                   icon={MapPin}
-                  label="Location"
-                  value="Toronto, Ontario · Canada"
+                  label="Ubicación"
+                  value="Bucaramanga · Colombia"
                   href={null}
                   copyable={false}
                 />
               </div>
 
               <div className="mt-10">
-                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                  you can also find me here
+                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
+                  Mis redes sociales
                 </p>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {SOCIAL_LINKS.map((link) => (
@@ -696,11 +548,11 @@ export const ContactSection = () => {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                Send me a message
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
+                Envíame un mensaje
               </p>
 
-              <div className="border-t border-border pt-6">
+              <div className="border-t border-marsupial-purple/10 pt-6">
                 <AnimatePresence mode="wait">
                   {sent ? (
                     <SuccessState
