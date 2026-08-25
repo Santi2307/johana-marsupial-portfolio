@@ -25,7 +25,7 @@ const OFERTAS = [
     icon: Package,
     titulo: "Pedidos personalizados",
     lineas: [
-      "Mínimo por referencia: 12 pares",
+      "Mínimo por referencia: 1 par",
       "Variedad de tallas y colores por diseño",
     ],
   },
@@ -34,14 +34,14 @@ const OFERTAS = [
     titulo: "Producción propia",
     lineas: [
       "Taller propio en Bucaramanga",
-      "Capacidad de 5.000+ pares mensuales",
+      "Capacidad de 1.000+ pares mensuales",
     ],
   },
   {
     icon: Clock,
     titulo: "Tiempos de entrega",
     lineas: [
-      "30-45 días para pedidos regulares",
+      "30-60 días para pedidos regulares",
       "Órdenes urgentes bajo consulta",
     ],
   },
@@ -50,7 +50,6 @@ const OFERTAS = [
     titulo: "Términos comerciales",
     lineas: [
       "Precios mayoristas competitivos",
-      "Plazos de pago negociables",
       "Envíos nacionales e internacionales",
     ],
   },
@@ -85,7 +84,7 @@ const CTAS = [
   {
     icon: Calendar,
     label: "Agendar reunión",
-    href: "mailto:johana@marsupial.com.co?subject=Agendar%20reunión%20comercial",
+    href: "https://calendly.com/johana-marsupial/30min",
     primary: false,
   },
   {
@@ -184,9 +183,16 @@ export const SkillsSection = () => {
             transition={{ duration: 0.7, delay: 0.2, ease: EASE_OUT }}
             className="text-base leading-relaxed text-marsupial-purple/70 md:text-lg"
           >
-            Marsupial trabaja con boutiques multimarca, tiendas departamentales
-            y distribuidores en Colombia y Latinoamérica. Producción propia,
-            calidad garantizada y términos comerciales flexibles.
+            Marsupial trabaja con marcas a nivel nacional e internacional.
+            Contamos con un Centro de Producción Propio con capacidad para
+            manejar altos volúmenes de producción, manteniendo altos estándares
+            de calidad y cumplimiento. Contamos con personal capacitado y
+            especializado en cada etapa del proceso, desde el diseño y
+            desarrollo hasta la fabricación y control de calidad. Nuestra
+            experiencia nos permite adaptarnos a las necesidades de cada
+            cliente, ofreciendo soluciones flexibles, producción a gran escala y
+            atención personalizada, garantizando productos elaborados con altos
+            estándares de calidad y el cuidado artesanal que nos caracteriza.
           </motion.p>
         </div>
 
