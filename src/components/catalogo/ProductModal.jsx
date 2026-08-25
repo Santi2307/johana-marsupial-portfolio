@@ -3,23 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Share2 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
-/**
- * Modal de producto individual
- * Se abre cuando el cliente hace click en cualquier ProductCard
- *
- * Props:
- * - product: objeto del producto (null si está cerrado)
- * - onClose: función para cerrar el modal
- */
-
 // CAMBIA ESTE NÚMERO por el WhatsApp real de Johana / Marsupial
-const WHATSAPP_NUMBER = "573174385716"; // Colombia: 57 + número sin espacios
+const WHATSAPP_NUMBER = "573174385716";
 
 export const ProductModal = ({ product, onClose }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(0);
   const [selectedColor, setSelectedColor] = useState(0);
 
-  // Bloquear scroll del body cuando el modal está abierto
   useEffect(() => {
     if (product) {
       document.body.style.overflow = "hidden";
@@ -31,7 +21,6 @@ export const ProductModal = ({ product, onClose }) => {
     };
   }, [product]);
 
-  // Cerrar con tecla ESC
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose?.();
@@ -42,7 +31,6 @@ export const ProductModal = ({ product, onClose }) => {
     }
   }, [product, onClose]);
 
-  // Reset al abrir un producto nuevo
   useEffect(() => {
     setSelectedPhoto(0);
     setSelectedColor(0);
@@ -68,7 +56,6 @@ export const ProductModal = ({ product, onClose }) => {
         // usuario canceló
       }
     } else {
-      // Fallback: copiar link al portapapeles
       await navigator.clipboard.writeText(window.location.href);
       alert("Link copiado al portapapeles");
     }
@@ -77,28 +64,24 @@ export const ProductModal = ({ product, onClose }) => {
   return (
     <AnimatePresence>
       {product && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={onClose}
-            className="fixed inset-0 z-[70] bg-marsupial-purple/40 backdrop-blur-sm"
-            aria-hidden
-          />
-
-          {/* Modal */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={onClose}
+          className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-marsupial-purple/40 p-4 backdrop-blur-sm md:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="product-title"
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed left-1/2 top-1/2 z-[80] w-[95%] max-w-5xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white shadow-2xl"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="product-title"
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl"
           >
             {/* Botón cerrar */}
             <button
@@ -110,10 +93,11 @@ export const ProductModal = ({ product, onClose }) => {
               <X size={18} />
             </button>
 
-            <div className="grid max-h-[90vh] grid-cols-1 overflow-y-auto md:grid-cols-2 md:overflow-hidden">
+            {/* Contenedor principal - flex en móvil, grid en desktop */}
+            <div className="flex max-h-[90vh] flex-col md:grid md:grid-cols-[1fr_1fr] md:overflow-hidden">
               {/* ─── IZQUIERDA — Galería de fotos ─── */}
-              <div className="relative bg-marsupial-purple/5">
-                <div className="relative aspect-square md:h-full">
+              <div className="relative w-full min-w-0 bg-marsupial-purple/5">
+                <div className="relative aspect-square w-full md:h-full md:aspect-auto">
                   {product.fotos && product.fotos[selectedPhoto] ? (
                     <img
                       src={product.fotos[selectedPhoto]}
@@ -129,7 +113,6 @@ export const ProductModal = ({ product, onClose }) => {
                   )}
                 </div>
 
-                {/* Miniaturas si hay más de una foto */}
                 {product.fotos && product.fotos.length > 1 && (
                   <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
                     {product.fotos.map((_, i) => (
@@ -150,9 +133,9 @@ export const ProductModal = ({ product, onClose }) => {
               </div>
 
               {/* ─── DERECHA — Info del producto ─── */}
-              <div className="flex flex-col overflow-y-auto p-8 md:p-10">
+              <div className="flex min-w-0 flex-col overflow-y-auto p-8 md:p-10">
                 {/* Referencia + colección */}
-                <div className="mb-3 flex items-center gap-3">
+                <div className="mb-3 flex flex-wrap items-center gap-3">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
                     {product.referencia}
                   </span>
@@ -185,14 +168,14 @@ export const ProductModal = ({ product, onClose }) => {
                     <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
                       Color · {colorActual?.nombre}
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {product.colores.map((color, i) => (
                         <button
                           key={color.nombre}
                           type="button"
                           onClick={() => setSelectedColor(i)}
                           aria-label={`Seleccionar color ${color.nombre}`}
-                          className={`h-10 w-10 rounded-full border-2 transition-all ${
+                          className={`h-10 w-10 flex-shrink-0 rounded-full border-2 transition-all ${
                             selectedColor === i
                               ? "border-marsupial-purple ring-2 ring-marsupial-purple/30 ring-offset-2"
                               : "border-marsupial-purple/20 hover:border-marsupial-purple/50"
@@ -214,7 +197,7 @@ export const ProductModal = ({ product, onClose }) => {
                       {product.tallas.map((talla) => (
                         <span
                           key={talla}
-                          className="flex h-10 w-10 items-center justify-center rounded-md border border-marsupial-purple/20 text-sm font-medium text-marsupial-purple"
+                          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md border border-marsupial-purple/20 text-sm font-medium text-marsupial-purple"
                         >
                           {talla}
                         </span>
@@ -259,7 +242,7 @@ export const ProductModal = ({ product, onClose }) => {
               </div>
             </div>
           </motion.div>
-        </>
+        </motion.div>
       )}
     </AnimatePresence>
   );

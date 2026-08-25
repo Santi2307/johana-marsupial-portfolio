@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { name: "Inicio", href: "#hero", index: "01" },
   { name: "Acerca de", href: "#about", index: "02" },
-  { name: "Referencias", href: "#skills-heading", index: "03" },
+  { name: "Wholesale", href: "#wholesale", index: "03" },
   { name: "Catálogo", href: "#catalogo", index: "04" },
-  { name: "Contacto", href: "#contact", index: "05" },
+  { name: "Colaboraciones", href: "#colaboraciones", index: "05" },
+  { name: "Contacto", href: "#contact", index: "06" },
 ];
 
 /* ─────────────────────────── Hooks ─────────────────────────── */

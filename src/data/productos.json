@@ -3,51 +3,56 @@
     {
       "id": "ref-3862",
       "referencia": "REF-3862",
-      "nombre": "Sandalia Ana",
+      "nombre": "Bailarina Socorrita",
       "categoria": "zapatos",
       "subcategoria": "sandalias",
-      "descripcion": "Sandalia plana en cuero con nudo frontal. Elegante y cómoda para uso diario.",
+      "descripcion": "Sandalia plana.",
       "colores": [
-        { "nombre": "Rosa", "hex": "#F8B4C4" },
-        { "nombre": "Beige", "hex": "#E8D5C4" },
-        { "nombre": "Negro", "hex": "#1A1A1A" }
+        { "nombre": "Verde Pino", "hex": "#01796F" },
+        { "nombre": "Amarillo", "hex": "#F4D047" },
+        { "nombre": "Negro", "hex": "#1A1A1A" },
+        { "nombre": "Rojo", "hex": "#C41E3A" },
+        { "nombre": "Marrón", "hex": "#5D4037" },
+        { "nombre": "Vinotinto", "hex": "#6B1A2E" },
+        { "nombre": "Azul", "hex": "#1E3A8A" }
       ],
       "tallas": [35, 36, 37, 38, 39, 40],
-      "material": "Cuero natural — hecho en Colombia",
-      "coleccion": "Otoño 2026",
+      "material": "Cuero natural",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3862.jpg"]
+      "fotos": ["/productos/zapatos/socorritas.jpeg"]
+
+
     },
+
     {
       "id": "ref-3873",
       "referencia": "REF-3873",
-      "nombre": "Sandalia Amarilla",
+      "nombre": "Bailarina Zaritha",
       "categoria": "zapatos",
       "subcategoria": "sandalias",
-      "descripcion": "Sandalia amarilla con detalle en tira frontal. Perfecta para el verano.",
-      "colores": [{ "nombre": "Amarillo", "hex": "#F4D047" }],
+      "descripcion": "Sandalia zaritha",
+      "colores": [{ "nombre": "Beige", "hex": "#F4D047" }],
       "tallas": [35, 36, 37, 38, 39],
       "material": "Cuero natural",
-      "coleccion": "Verano 2025",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3873.jpg"]
+      "fotos": ["/productos/zapatos/zarithas.jpeg"]
     },
     {
       "id": "ref-3820",
       "referencia": "REF-3820",
-      "nombre": "Sandalia Deportiva Fucsia",
+      "nombre": "Bailarina Sahra Fusil",
       "categoria": "zapatos",
       "subcategoria": "casual",
       "descripcion": "Sandalia deportiva con tiras ajustables. Comodidad todo el día.",
       "colores": [
-        { "nombre": "Fucsia", "hex": "#DC2E7E" },
+        { "nombre": "Cañon Fusil", "hex": "#DC2E7E" },
         { "nombre": "Negro", "hex": "#1A1A1A" }
       ],
       "tallas": [35, 36, 37, 38, 39, 40],
       "material": "Textil técnico",
       "coleccion": "Verano 2025",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3820.jpg"]
+      "fotos": ["/productos/zapatos/Bailarina_Sahra_Fusil.jpeg"]
     },
     {
       "id": "ref-3877",

@@ -22,7 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xldwapjy";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mqpzrbep";
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -466,7 +466,7 @@ export const ContactSection = () => {
               transition={{ duration: 0.5 }}
               className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
             >
-              <span className="text-marsupial-purple">05</span> / contacto
+              <span className="text-marsupial-purple">06</span> / contacto
             </motion.p>
             <motion.h2
               id="contact-heading"
