@@ -86,7 +86,13 @@ export const PartnersSection = () => {
   const inView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   // Duplicamos el array 3 veces para que se vea denso con solo 4 logos
-  const partnersDuplicados = [...PARTNERS, ...PARTNERS, ...PARTNERS];
+const partnersConRepeticion = [
+  ...PARTNERS,
+  ...PARTNERS,
+  ...PARTNERS,
+  ...PARTNERS,
+];
+const partnersDuplicados = [...partnersConRepeticion, ...partnersConRepeticion];
 
   return (
     <section
@@ -113,9 +119,7 @@ export const PartnersSection = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: EASE_OUT }}
             className="mb-4 text-3xl font-bold leading-[1.05] tracking-tight text-marsupial-purple md:text-5xl"
-          >
-
-          </motion.h2>
+          ></motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -145,7 +149,7 @@ export const PartnersSection = () => {
 
           {/* Track del carrusel */}
           <div
-            className="flex gap-6 py-4 animate-marquee-left"
+            className="flex w-max gap-6 py-4 animate-marquee-left"
             style={{
               animationDuration: "30s",
               animationPlayState: isPaused ? "paused" : "running",

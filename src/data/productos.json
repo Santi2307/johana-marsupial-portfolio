@@ -49,80 +49,74 @@
         { "nombre": "Negro", "hex": "#1A1A1A" }
       ],
       "tallas": [35, 36, 37, 38, 39, 40],
-      "material": "Textil técnico",
-      "coleccion": "Verano 2025",
+      "material": "Cuero",
       "destacado": true,
       "fotos": ["/productos/zapatos/Bailarina_Sahra_Fusil.jpeg"]
     },
     {
       "id": "ref-3877",
       "referencia": "REF-3877",
-      "nombre": "Balerina Plateada",
+      "nombre": "Baleta Athina Negro",
       "categoria": "zapatos",
       "subcategoria": "baletas",
       "descripcion": "Balerina en plateado metalizado con hebilla ajustable. Elegancia versátil.",
-      "colores": [{ "nombre": "Plateado", "hex": "#C0C0C0" }],
+      "colores": [{ "nombre": "Negro", "hex": "#C0C0C0" }],
       "tallas": [35, 36, 37, 38, 39],
       "material": "Cuero metalizado",
-      "coleccion": "Otoño 2026",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3877.jpg"]
+      "fotos": ["/productos/zapatos/baleta_athina_negro.jpeg"]
     },
     {
       "id": "ref-3878",
       "referencia": "REF-3878",
-      "nombre": "Balerina Verde",
+      "nombre": "Salon Chanel Croco Azul",
       "categoria": "zapatos",
-      "subcategoria": "baletas",
-      "descripcion": "Balerina puntera en verde vibrante con detalle en tira.",
-      "colores": [{ "nombre": "Verde", "hex": "#2D8659" }],
+      "subcategoria": "tacones",
+      "descripcion": "Tacon",
+      "colores": [{ "nombre": "azul", "hex": "#2D8659" }],
       "tallas": [35, 36, 37, 38, 39],
       "material": "Cuero natural",
-      "coleccion": "Primavera 2026",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3878.jpg"]
+      "fotos": ["/productos/zapatos/salon_chanel_croco_azul.jpeg"]
     },
     {
       "id": "ref-3830",
       "referencia": "REF-3830",
-      "nombre": "Plataforma Marina",
+      "nombre": "Planta Sofia Negro",
       "categoria": "zapatos",
       "subcategoria": "plataformas",
-      "descripcion": "Plataforma en azul marino con tiras cruzadas. Altura cómoda para todo el día.",
-      "colores": [{ "nombre": "Azul Marino", "hex": "#1E3A5F" }],
+      "descripcion": "Plata Sofia",
+      "colores": [{ "nombre": "Negro", "hex": "#1E3A5F" }],
       "tallas": [35, 36, 37, 38, 39, 40],
-      "material": "Cuero sintético premium",
-      "coleccion": "Verano 2025",
+      "material": "Cuero",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3830.jpg"]
+      "fotos": ["/productos/zapatos/planta_sofia_negro.jpeg"]
     },
     {
       "id": "ref-3881",
       "referencia": "REF-3881",
-      "nombre": "Plataforma Amarilla",
+      "nombre": "Sandalia Thani Azul",
       "categoria": "zapatos",
-      "subcategoria": "plataformas",
-      "descripcion": "Plataforma en amarillo brillante con detalle frontal. Statement piece.",
-      "colores": [{ "nombre": "Amarillo", "hex": "#F4D047" }],
+      "subcategoria": "sandalias",
+      "descripcion": "Sandalia plana azul",
+      "colores": [{ "nombre": "Azul", "hex": "#F4D047" }],
       "tallas": [35, 36, 37, 38, 39],
       "material": "Cuero natural texturizado",
-      "coleccion": "Verano 2025",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3881.jpg"]
+      "fotos": ["/productos/zapatos/sandalia_thani_azul.jpeg"]
     },
     {
       "id": "ref-3887",
       "referencia": "REF-3887",
-      "nombre": "Zapato Turquesa",
+      "nombre": "Cuña Athina Miel",
       "categoria": "zapatos",
       "subcategoria": "tacones",
-      "descripcion": "Zapato cerrado en turquesa con detalles calados. Único y elegante.",
-      "colores": [{ "nombre": "Turquesa", "hex": "#2D9B93" }],
+      "descripcion": "Cuña Miel",
+      "colores": [{ "nombre": "Miel", "hex": "#2D9B93" }],
       "tallas": [35, 36, 37, 38, 39],
       "material": "Cuero natural",
-      "coleccion": "Primavera 2026",
       "destacado": true,
-      "fotos": ["/productos/zapatos/ref-3887.jpg"]
+      "fotos": ["/productos/zapatos/cuña_athina_miel.jpeg"]
     }
   ],
   "categorias": [

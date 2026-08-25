@@ -39,7 +39,7 @@ export const CatalogoCarousel = ({
 
       {/* Track de la pasarela */}
       <div
-        className={`flex gap-6 ${animationClass}`}
+        className={`flex w-max gap-6 ${animationClass}`}
         style={{
           animationDuration: `${speed}s`,
           animationPlayState: isPaused ? "paused" : "running",
