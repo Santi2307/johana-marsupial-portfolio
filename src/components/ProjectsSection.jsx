@@ -76,7 +76,7 @@ export const ProjectsSection = () => {
             className="-mx-4 mb-12"
           >
             <p className="mb-6 px-4 font-mono text-[10px] uppercase tracking-[0.2em] text-marsupial-purple/50">
-              Destacados de la temporada
+              Dale un vistazo a nuestro catalogo.
             </p>
 
             <CatalogoCarousel
