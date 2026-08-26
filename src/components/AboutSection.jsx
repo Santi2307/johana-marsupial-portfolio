@@ -21,6 +21,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const PHOTOS = [
   { src: "/images/johana1.jpeg" },
+  { src: "/images/johana2.jpeg" },
 ];
 
 
