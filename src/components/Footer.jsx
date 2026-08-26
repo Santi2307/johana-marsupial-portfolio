@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
 
-const useTorontoYear = () => {
+// Hook para obtener el año en la zona horaria de Bogotá
+const useBogotaYear = () => {
   const getYear = () =>
     parseInt(
       new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/Toronto",
+        timeZone: "America/Bogota",
         year: "numeric",
       }).format(new Date()),
       10,
@@ -15,18 +16,18 @@ const useTorontoYear = () => {
 
   useEffect(() => {
     const scheduleNext = () => {
-      const nowInToronto = new Date(
-        new Date().toLocaleString("en-US", { timeZone: "America/Toronto" }),
+      const nowInBogota = new Date(
+        new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }),
       );
       const nextNewYear = new Date(
-        nowInToronto.getFullYear() + 1,
+        nowInBogota.getFullYear() + 1,
         0,
         1,
         0,
         0,
         1,
       );
-      const msUntil = nextNewYear.getTime() - nowInToronto.getTime();
+      const msUntil = nextNewYear.getTime() - nowInBogota.getTime();
 
       return setTimeout(() => {
         setYear(getYear());
@@ -41,8 +42,10 @@ const useTorontoYear = () => {
   return year;
 };
 
+// Componente Footer corregido
 export const Footer = () => {
-  const year = useTorontoYear();
+  // CORRECCIÓN: Usar el hook correcto con la zona horaria de Bogotá
+  const year = useBogotaYear();
 
   return (
     <footer
@@ -54,8 +57,8 @@ export const Footer = () => {
           <span>
             <span className="tabular-nums text-white">© {year}</span>
             <span className="mx-3 opacity-40">/</span>
-            Johana Sanchez Pulido. Diseñado y desarrollado por la autora. Todos
-            los derechos reservados.
+            Diseñado y desarrollado por Johana Sanchez Pulido. Todos
+            los Derechos Reservados.
           </span>
 
           <button

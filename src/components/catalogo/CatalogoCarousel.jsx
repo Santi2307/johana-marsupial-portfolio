@@ -4,7 +4,7 @@ import { ProductCard } from "./ProductCard";
 export const CatalogoCarousel = ({
   productos = [],
   onProductClick,
-  direction = "left",
+  direction = "left", // Si el usuario quiere "left", el efecto debe ser "left"
   speed = 40,
 }) => {
   const [isPaused, setIsPaused] = useState(false);
