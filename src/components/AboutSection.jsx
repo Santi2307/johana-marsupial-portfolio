@@ -32,35 +32,35 @@ const BIO = [
 const SKILLS = [
   {
     number: "01",
-    title: "Systems & Infrastructure",
-    summary: "Linux, Windows, macOS administration with automation.",
+    title: "Inspiración y Diseño",
+    summary: "De la observacion al boceto.",
     detail:
-      " I worked daily in Linux, Windows and MacOS environments,troubleshooting and automating processes. I am comfortable with Docker, OpenShift, and Azure in production environments.",
-    tags: ["Linux", "Ansible", "Docker", "OpenShift", "Azure"],
+      " Cada colección nace de observar a la mujer real, cómo camina, qué necesita, qué la hace sentir bien. Estudio tendencias, materiales y siluetas antes de traducir ideas en bocetos. Cada línea del dibujo tiene una razón: la altura del tacón, la curva de la horma, el detalle de una hebilla. Aquí es donde nace el ADN de cada par de zapatos que llevan el nombre de Marsupial.",
+    tags: ["Bocetos", "Inspiración", "Tendencias", "Diseño"],
   },
   {
     number: "02",
-    title: "Networking",
-    summary: "Designing and configuring networks that actually stay up.",
+    title: "Selección de Materiales",
+    summary: "Cuero, forro y componentes elegidos a mano.",
     detail:
-      "I worked with Aruba AOS-CX switches to implement and design automations to run processes more efficiently. I have experience configuring VLANs, OSPF, and DHCP.  ",
-    tags: ["Cisco", "Aruba", "VLANs", "OSPF", "RF Engineering"],
+      "Antes de cortar el primer par, superviso personalmente cada material que entra al taller. Cueros nacionales seleccionados por textura y flexibilidad, forros que respiran, suelas cómodas y hebillas duraderas. La calidad de un zapato empieza mucho antes de la producción — empieza en la mesa donde decido qué materiales merecen llevar el nombre Marsupial.",
+    tags: ["Cuero Natural", "Materiales", "Curaduria", "Calidad"],
   },
   {
     number: "03",
-    title: "Web Development",
-    summary: "Interfaces built with React, Vite, and Tailwind.",
+    title: "Producción Artesanal",
+    summary: "Manos colombianas construyendo cada par.",
     detail:
-      "I build  interfaces I want to use that are fast, accessible, with motion that serves the content. My portfolio is a small example: React with Zustand for state, Framer Motion for animation, and Tailwind for styling.",
-    tags: ["React", "Vite", "Tailwind", "Framer Motion"],
+      "En la fabrica, cada par pasa por manos de artesanos con décadas de oficio. Corte, aparado, montaje y terminación, cada etapa se hace con la atención que merece un producto hecho para durar. No producimos en masa: cada zapato tiene el tiempo que necesita para salir perfecto. Aquí es donde el diseño se convierte en realidad.",
+    tags: ["Artesanos", "Produccion", "Oficio", "Bucaramanga"],
   },
   {
     number: "04",
-    title: "Student Support",
-    summary: "Nearly two years helping students have better environments.",
+    title: "Control de Calidad y Entrega",
+    summary: "Revisado, empacado y listo para su nueva dueña.",
     detail:
-      "As a Student Support Ambassador at Seneca, I helped students with accessibility needs navigate hardware, software, and the small frustrations that get in the way of their work. Patient troubleshooting and clear written communication are the parts of the job I enjoy most.",
-    tags: ["Troubleshooting", "Accessibility", "Documentation"],
+      "Antes de que cualquier par salga de la fabrica, pasa por revisión final: costuras, terminaciones, simetría, comodidad. Solo lo que cumple con nuestros estándares se empaca y despacha. Ya sea para nuestra tienda o un distribuidor internacional, cada zapato Marsupial llega con la promesa de ofrecer comodidad y lujo.",
+    tags: ["Calidad", "Empaque", "Despacho", "Cliente Final"],
   },
 ];
 
@@ -247,12 +247,11 @@ const PhotoGallery = () => {
 
 /* ─────────────────────────── Skill row (editorial style) ─────────────────────────── */
 
-const SkillRow = ({ skill, index, isOpen, onToggle }) => {
+const SkillRow = ({ skill, index, isOpen, onToggle, isLast }) => {
   const reducedMotion = useReducedMotion();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.4 });
 
-  // Cursor-following spotlight (subtle)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const onMouseMove = useCallback(
@@ -265,7 +264,6 @@ const SkillRow = ({ skill, index, isOpen, onToggle }) => {
     },
     [mouseX, mouseY, reducedMotion],
   );
-
   const glow = useMotionTemplate`radial-gradient(280px circle at ${mouseX}px ${mouseY}px, hsl(var(--primary) / 0.07), transparent 70%)`;
 
   return (
@@ -275,8 +273,41 @@ const SkillRow = ({ skill, index, isOpen, onToggle }) => {
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.06, duration: 0.6, ease: EASE_OUT }}
-      className="group relative border-t border-border last:border-b"
+      className="group relative"
     >
+      {/* Línea vertical del timeline */}
+      {!isLast && (
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute left-[7px] top-8 h-full w-16 -translate-x-1/2"
+          preserveAspectRatio="none"
+          viewBox="0 0 40 100"
+        >
+          <path
+            d={
+              index % 2 === 0
+                ? "M 20 0 Q 40 25, 20 50 T 20 100"
+                : "M 20 0 Q 0 25, 20 50 T 20 100"
+            }
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            className="text-marsupial-purple/30"
+          />
+        </svg>
+      )}
+
+      {/* Dot del timeline */}
+      <div
+        aria-hidden
+        className={cn(
+          "absolute left-0 top-8 h-[15px] w-[15px] rounded-full border-2 transition-all duration-300",
+          isOpen
+            ? "border-marsupial-purple bg-marsupial-purple scale-110"
+            : "border-border bg-background group-hover:border-marsupial-purple/60",
+        )}
+      />
+
       {/* Cursor spotlight */}
       <motion.div
         aria-hidden
@@ -289,12 +320,11 @@ const SkillRow = ({ skill, index, isOpen, onToggle }) => {
         onClick={() => onToggle(index)}
         aria-expanded={isOpen}
         aria-controls={`skill-detail-${index}`}
-        className="relative z-10 grid w-full grid-cols-[auto_1fr_auto] items-baseline gap-6 px-1 py-6 text-left transition-colors hover:text-foreground"
+        className="relative z-10 grid w-full grid-cols-[auto_1fr_auto] items-baseline gap-6 py-6 pl-10 pr-1 text-left transition-colors hover:text-foreground"
       >
         <span className="font-mono text-xs text-muted-foreground tabular-nums">
           {skill.number}
         </span>
-
         <div>
           <h4 className="text-lg font-semibold leading-tight md:text-xl">
             {skill.title}
@@ -308,7 +338,6 @@ const SkillRow = ({ skill, index, isOpen, onToggle }) => {
             {skill.summary}
           </p>
         </div>
-
         <motion.span
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3, ease: EASE_OUT }}
@@ -329,8 +358,8 @@ const SkillRow = ({ skill, index, isOpen, onToggle }) => {
             transition={{ duration: 0.4, ease: EASE_OUT }}
             className="relative z-10 overflow-hidden"
           >
-            <div className="grid grid-cols-[auto_1fr_auto] gap-6 px-1 pb-6">
-              <span aria-hidden /> {/* spacer to align with number column */}
+            <div className="grid grid-cols-[auto_1fr_auto] gap-6 pb-6 pl-10 pr-1">
+              <span aria-hidden />
               <div className="max-w-2xl space-y-3">
                 <p className="text-sm leading-relaxed text-foreground/80">
                   {skill.detail}
@@ -346,7 +375,7 @@ const SkillRow = ({ skill, index, isOpen, onToggle }) => {
                   ))}
                 </div>
               </div>
-              <span aria-hidden /> {/* spacer to align with plus column */}
+              <span aria-hidden />
             </div>
           </motion.div>
         )}
@@ -411,7 +440,7 @@ export const AboutSection = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="hidden max-w-xs text-right text-xs leading-relaxed text-muted-foreground md:block"
           >
-            Get to know the person behind the screen.
+            Conoce un poco mas de mí.
           </motion.div>
         </div>
 
@@ -467,17 +496,18 @@ export const AboutSection = () => {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground"
             >
-              Expertise
+              Procesos detras de nuestros productos.
             </motion.p>
 
             <div role="list" aria-label="Areas of expertise">
               {SKILLS.map((skill, i) => (
                 <SkillRow
-                  key={skill.title}
+                  key={skill.number}
                   skill={skill}
                   index={i}
                   isOpen={openSkill === i}
                   onToggle={handleToggleSkill}
+                  isLast={i === SKILLS.length - 1}
                 />
               ))}
             </div>
