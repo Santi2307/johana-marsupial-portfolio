@@ -50,8 +50,7 @@ export const CatalogoCarousel = ({
         className={`flex w-max gap-6 will-change-transform ${animationClass}`}
         style={{
           animationDuration: `${speed}s`,
-          animationPlayState:
-            isPaused || prefersReducedMotion ? "paused" : "running",
+          animationPlayState: isPaused ? "paused" : "running",
         }}
       >
         {productosDuplicados.map((product, index) => (
