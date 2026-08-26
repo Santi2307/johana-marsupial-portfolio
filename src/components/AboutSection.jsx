@@ -420,7 +420,7 @@ export const AboutSection = () => {
               transition={{ duration: 0.5 }}
               className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
             >
-              <span className="text-marsupial-purple">02</span> / about
+              <span className="text-marsupial-purple">02</span> / Acerca de
             </motion.p>
             <motion.h2
               id="about-heading"

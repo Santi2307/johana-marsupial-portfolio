@@ -164,7 +164,7 @@ export const SkillsSection = () => {
             transition={{ duration: 0.5 }}
             className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
           >
-            <span className="text-marsupial-purple">03</span> / wholesale
+            <span className="text-marsupial-purple">03</span> / Trabajemos Juntos
           </motion.p>
 
           <motion.h2
