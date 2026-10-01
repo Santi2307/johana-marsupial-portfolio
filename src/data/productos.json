@@ -7,19 +7,51 @@
       "categoria": "zapatos",
       "subcategoria": "sandalias",
       "descripcion": "Sandalia plana.",
+      "precio": 149900,
       "colores": [
-        { "nombre": "Verde Pino", "hex": "#01796F" },
-        { "nombre": "Amarillo", "hex": "#F4D047" },
-        { "nombre": "Negro", "hex": "#1A1A1A" },
-        { "nombre": "Rojo", "hex": "#C41E3A" },
-        { "nombre": "Marrón", "hex": "#5D4037" },
-        { "nombre": "Vinotinto", "hex": "#6B1A2E" },
-        { "nombre": "Azul", "hex": "#1E3A8A" }
+        {
+          "nombre": "Verde Pino",
+          "hex": "#01796F"
+        },
+        {
+          "nombre": "Amarillo",
+          "hex": "#F4D047"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#1A1A1A"
+        },
+        {
+          "nombre": "Rojo",
+          "hex": "#C41E3A"
+        },
+        {
+          "nombre": "Marrón",
+          "hex": "#5D4037"
+        },
+        {
+          "nombre": "Vinotinto",
+          "hex": "#6B1A2E"
+        },
+        {
+          "nombre": "Azul",
+          "hex": "#1E3A8A"
+        }
       ],
-      "tallas": [35, 36, 37, 38, 39, 40],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
       "material": "Cuero natural",
       "destacado": true,
-      "fotos": ["/productos/zapatos/socorritas.jpeg"]
+      "fotos": [
+        "/productos/zapatos/socorritas.jpeg"
+      ],
+      "nuevo": false
     },
     {
       "id": "ref-3873",
@@ -28,11 +60,26 @@
       "categoria": "zapatos",
       "subcategoria": "sandalias",
       "descripcion": "Sandalia Zaritha.",
-      "colores": [{ "nombre": "Beige", "hex": "#EEDC82" }],
-      "tallas": [35, 36, 37, 38, 39],
+      "precio": 149900,
+      "colores": [
+        {
+          "nombre": "Beige",
+          "hex": "#EEDC82"
+        }
+      ],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
       "material": "Cuero natural",
       "destacado": true,
-      "fotos": ["/productos/zapatos/zarithas.jpeg"]
+      "fotos": [
+        "/productos/zapatos/zarithas.jpeg"
+      ],
+      "nuevo": false
     },
     {
       "id": "ref-3820",
@@ -41,14 +88,31 @@
       "categoria": "zapatos",
       "subcategoria": "casual",
       "descripcion": "Bailarina casual con tiras ajustables. Comodidad todo el día.",
+      "precio": 169900,
       "colores": [
-        { "nombre": "Cañón Fusil", "hex": "#4B5320" },
-        { "nombre": "Negro", "hex": "#1A1A1A" }
+        {
+          "nombre": "Cañón Fusil",
+          "hex": "#4B5320"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#1A1A1A"
+        }
       ],
-      "tallas": [35, 36, 37, 38, 39, 40],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
       "material": "Cuero",
       "destacado": true,
-      "fotos": ["/productos/zapatos/Bailarina_Sahra_Fusil.jpeg"]
+      "fotos": [
+        "/productos/zapatos/Bailarina_Sahra_Fusil.jpeg"
+      ],
+      "nuevo": false
     },
     {
       "id": "ref-3877",
@@ -57,11 +121,26 @@
       "categoria": "zapatos",
       "subcategoria": "baletas",
       "descripcion": "Baleta en color negro con hebilla ajustable. Elegancia versátil.",
-      "colores": [{ "nombre": "Negro", "hex": "#1A1A1A" }],
-      "tallas": [35, 36, 37, 38, 39],
+      "precio": 159900,
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#1A1A1A"
+        }
+      ],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
       "material": "Cuero metalizado",
       "destacado": true,
-      "fotos": ["/productos/zapatos/baleta_athina_negro.jpeg"]
+      "fotos": [
+        "/productos/zapatos/baleta_athina_negro.jpeg"
+      ],
+      "nuevo": false
     },
     {
       "id": "ref-3878",
@@ -70,11 +149,26 @@
       "categoria": "zapatos",
       "subcategoria": "tacones",
       "descripcion": "Salón tipo Chanel con textura croco.",
-      "colores": [{ "nombre": "Azul", "hex": "#1E3A8A" }],
-      "tallas": [35, 36, 37, 38, 39],
+      "precio": 229900,
+      "colores": [
+        {
+          "nombre": "Azul",
+          "hex": "#1E3A8A"
+        }
+      ],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
       "material": "Cuero natural",
       "destacado": true,
-      "fotos": ["/productos/zapatos/salon_chanel_croco_azul.jpeg"]
+      "fotos": [
+        "/productos/zapatos/salon_chanel_croco_azul.jpeg"
+      ],
+      "nuevo": true
     },
     {
       "id": "ref-3830",
@@ -83,11 +177,27 @@
       "categoria": "zapatos",
       "subcategoria": "plataformas",
       "descripcion": "Plataforma Sofia cómoda y versátil.",
-      "colores": [{ "nombre": "Negro", "hex": "#1A1A1A" }],
-      "tallas": [35, 36, 37, 38, 39, 40],
+      "precio": 189900,
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#1A1A1A"
+        }
+      ],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
       "material": "Cuero",
       "destacado": true,
-      "fotos": ["/productos/zapatos/planta_sofia_negro.jpeg"]
+      "fotos": [
+        "/productos/zapatos/planta_sofia_negro.jpeg"
+      ],
+      "nuevo": false
     },
     {
       "id": "ref-3881",
@@ -96,11 +206,26 @@
       "categoria": "zapatos",
       "subcategoria": "sandalias",
       "descripcion": "Sandalia plana azul.",
-      "colores": [{ "nombre": "Azul", "hex": "#1E3A8A" }],
-      "tallas": [35, 36, 37, 38, 39],
+      "precio": 149900,
+      "colores": [
+        {
+          "nombre": "Azul",
+          "hex": "#1E3A8A"
+        }
+      ],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
       "material": "Cuero natural texturizado",
       "destacado": true,
-      "fotos": ["/productos/zapatos/sandalia_thani_azul.jpeg"]
+      "fotos": [
+        "/productos/zapatos/sandalia_thani_azul.jpeg"
+      ],
+      "nuevo": true
     },
     {
       "id": "ref-3887",
@@ -109,16 +234,39 @@
       "categoria": "zapatos",
       "subcategoria": "tacones",
       "descripcion": "Cuña en tono miel.",
-      "colores": [{ "nombre": "Miel", "hex": "#D4A373" }],
-      "tallas": [35, 36, 37, 38, 39],
+      "precio": 209900,
+      "colores": [
+        {
+          "nombre": "Miel",
+          "hex": "#D4A373"
+        }
+      ],
+      "tallas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
       "material": "Cuero natural",
       "destacado": true,
-      "fotos": ["/productos/zapatos/cuña_athina_miel.jpeg"]
+      "fotos": [
+        "/productos/zapatos/cuña_athina_miel.jpeg"
+      ],
+      "nuevo": true
     }
   ],
   "categorias": [
-    { "id": "todos", "nombre": "Todos", "descripcion": "Toda la colección" },
-    { "id": "zapatos", "nombre": "Zapatos", "descripcion": "Calzado femenino" },
+    {
+      "id": "todos",
+      "nombre": "Todos",
+      "descripcion": "Toda la colección"
+    },
+    {
+      "id": "zapatos",
+      "nombre": "Zapatos",
+      "descripcion": "Calzado femenino"
+    },
     {
       "id": "bolsos",
       "nombre": "Bolsos",
@@ -131,11 +279,29 @@
     }
   ],
   "subcategorias_zapatos": [
-    { "id": "sandalias", "nombre": "Sandalias" },
-    { "id": "baletas", "nombre": "Baletas" },
-    { "id": "plataformas", "nombre": "Plataformas" },
-    { "id": "tacones", "nombre": "Tacones" },
-    { "id": "casual", "nombre": "Casual" },
-    { "id": "botas", "nombre": "Botas" }
+    {
+      "id": "sandalias",
+      "nombre": "Sandalias"
+    },
+    {
+      "id": "baletas",
+      "nombre": "Baletas"
+    },
+    {
+      "id": "plataformas",
+      "nombre": "Plataformas"
+    },
+    {
+      "id": "tacones",
+      "nombre": "Tacones"
+    },
+    {
+      "id": "casual",
+      "nombre": "Casual"
+    },
+    {
+      "id": "botas",
+      "nombre": "Botas"
+    }
   ]
 }

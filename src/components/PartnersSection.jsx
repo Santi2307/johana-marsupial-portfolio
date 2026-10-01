@@ -110,7 +110,7 @@ const partnersDuplicados = [...partnersConRepeticion, ...partnersConRepeticion];
             transition={{ duration: 0.5 }}
             className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
           >
-            <span className="text-marsupial-purple">05</span> / colaboraciones
+            Colaboraciones
           </motion.p>
 
           <motion.h2
@@ -118,7 +118,7 @@ const partnersDuplicados = [...partnersConRepeticion, ...partnersConRepeticion];
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: EASE_OUT }}
-            className="mb-4 text-3xl font-bold leading-[1.05] tracking-tight text-marsupial-purple md:text-5xl"
+            className="mb-4 text-3xl font-display font-normal leading-[1.05] tracking-normal text-ink md:text-5xl"
           ></motion.h2>
 
           <motion.p

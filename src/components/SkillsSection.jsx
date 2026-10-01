@@ -164,7 +164,7 @@ export const SkillsSection = () => {
             transition={{ duration: 0.5 }}
             className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
           >
-            <span className="text-marsupial-purple">03</span> / Trabajemos Juntos
+            Mayoristas
           </motion.p>
 
           <motion.h2
@@ -172,7 +172,7 @@ export const SkillsSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: EASE_OUT }}
-            className="mb-6 text-4xl font-bold leading-[1.05] tracking-tight text-marsupial-purple md:text-6xl"
+            className="mb-6 text-5xl font-display font-normal leading-[1.05] tracking-normal text-ink md:text-7xl"
           >
             Trabajemos Juntos.
           </motion.h2>

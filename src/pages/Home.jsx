@@ -1,30 +1,38 @@
-import { Navbar } from "../components/Navbar";
-import { HeroSection } from "../components/HeroSection";
-import { AboutSection } from "../components/AboutSection";
+import { ShopHeader } from "../components/shop/ShopHeader";
+import { Hero3D } from "../components/shop/Hero3D";
+import {
+  CategoryTiles,
+  ShopSection,
+  ValuesStrip,
+} from "../components/shop/ShopSection";
+import { JohanaSection } from "../components/shop/JohanaSection";
+import { ProductSheet } from "../components/shop/ProductSheet";
+import { CartDrawer } from "../components/shop/CartDrawer";
+import { ShopFooter } from "../components/shop/ShopFooter";
 import { SkillsSection } from "../components/SkillsSection";
-import { ProjectsSection } from "../components/ProjectsSection";
 import { PartnersSection } from "../components/PartnersSection";
 import { ContactSection } from "../components/ContactSection";
-import { Footer } from "../components/Footer";
 
 export const Home = () => {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white text-marsupial-purple">
-      {/* Navbar */}
-      <Navbar />
+    <div className="min-h-screen overflow-x-clip bg-paper text-ink">
+      <ShopHeader />
 
-      {/* Main Content */}
       <main>
-        <HeroSection />
-        <AboutSection />
+        <Hero3D />
+        <ValuesStrip />
+        <CategoryTiles />
+        <ShopSection />
+        <JohanaSection />
         <SkillsSection />
-        <ProjectsSection />
         <PartnersSection />
         <ContactSection />
       </main>
 
-      {/* Footer */}
-      <Footer />
+      <ShopFooter />
+
+      <ProductSheet />
+      <CartDrawer />
     </div>
   );
 };

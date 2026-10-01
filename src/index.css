@@ -4,7 +4,15 @@
   /* ═══════════════════════════════════════════════
      TIPOGRAFÍA — Quicksand (spirit del logo Marsupial)
      ═══════════════════════════════════════════════ */
-  --font-sans: "Quicksand", "Nunito", system-ui, sans-serif;
+  --font-sans: "Inter Tight", "Quicksand", system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-brand: "Quicksand", "Nunito", system-ui, sans-serif;
+
+  /* Tienda — neutros de moda */
+  --color-ink: #16141C;
+  --color-paper: #F5F3EF;
+  --color-stone: #E2E1DE;
+  --color-sand: #DCD6CC;
 
   /* ═══════════════════════════════════════════════
      COLORES MARSUPIAL — Paleta oficial de la marca
@@ -74,7 +82,7 @@
 
   body {
     @apply bg-background text-foreground transition-colors duration-300;
-    font-family: "Quicksand", "Nunito", system-ui, sans-serif;
+    font-family: "Inter Tight", "Quicksand", system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
   }
@@ -135,4 +143,34 @@
 
 .animate-marquee-right {
   animation: marquee-right linear infinite;
+}
+
+/* ═══════════════════════════════════════════════
+   TIENDA
+   ═══════════════════════════════════════════════ */
+body {
+  background: var(--color-paper);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Imágenes de producto: fondo gris del estudio se funde con la card */
+.product-img {
+  mix-blend-mode: darken;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 4rem;
 }

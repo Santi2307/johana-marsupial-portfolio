@@ -466,14 +466,14 @@ export const ContactSection = () => {
               transition={{ duration: 0.5 }}
               className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-marsupial-purple/50"
             >
-              <span className="text-marsupial-purple">06</span> / contacto
+              Contacto
             </motion.p>
             <motion.h2
               id="contact-heading"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, ease: EASE_OUT }}
-              className="text-4xl font-bold leading-[1.05] tracking-tight text-marsupial-purple md:text-6xl"
+              className="text-5xl font-display font-normal leading-[1.05] tracking-normal text-ink md:text-7xl"
             >
               Contáctame.
             </motion.h2>
