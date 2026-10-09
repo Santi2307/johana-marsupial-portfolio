@@ -2,7 +2,7 @@
 
 # Marsupial · Online store
 
-**The online store for Marsupial, a handmade women's footwear brand from Bucaramanga, Colombia.**
+**The online store for Marsupial, a women's footwear brand from Bucaramanga, Colombia.**
 Designed and built end to end by [Santiago Delgado](https://santi-portafolio.vercel.app) for Johana Sánchez.
 
 [**View the live site →**](https://johana-marsupial-portfolio.vercel.app)
@@ -188,5 +188,5 @@ npm run dev        # http://localhost:5173
 ---
 
 <div align="center">
-<sub>Built by <a href="https://santi-portafolio.vercel.app">Santiago Delgado</a> · Product photos and brand © Marsupial · Johana Sánchez Pulido</sub>
+<sub>Built by <a href="https://santi-portafolio.vercel.app">Santiago Delgado</a> · Product photos and brand © Marsupial</sub>
 </div>
