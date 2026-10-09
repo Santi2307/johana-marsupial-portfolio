@@ -1,145 +1,192 @@
 <div align="center">
 
-# Santiago Delgado — Portfolio
+# Marsupial · Online store
 
+**The online store for Marsupial, a handmade women's footwear brand from Bucaramanga, Colombia.**
+Designed and built end to end by [Santiago Delgado](https://santi-portafolio.vercel.app) for Johana Sánchez.
 
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![Zustand](https://img.shields.io/badge/Zustand-2D3748?style=for-the-badge&logo=react&logoColor=white)](https://zustand-demo.pmnd.rs/)
+[**View the live site →**](https://johana-marsupial-portfolio.vercel.app)
 
-[**Live Demo**](#) · [**Report Bug**](https://github.com/Santi2307/santi-portafolio/issues) · [**LinkedIn**](https://linkedin.com/in/santiagodelgado23)
+![React](https://img.shields.io/badge/React_18-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-2D3748?style=flat-square)
+![Vercel](https://img.shields.io/badge/Deployed_on_Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+
+<img src="docs/hero.jpg" alt="Marsupial home page" width="880" />
 
 </div>
 
----
+## At a glance
 
-## 📌 About the Project
+| | |
+|---|---|
+| **Client** | Marsupial — a family footwear workshop with 20+ years of history and 1,000+ pairs a month |
+| **Goal** | Let customers browse the full collection on their own and send a complete order in one tap |
+| **Solution** | A fast catalog-and-cart storefront that turns a cart into a ready-to-send WhatsApp order |
+| **My role** | Sole developer: design, front-end, content structure, deployment |
+| **Status** | Live on Vercel, with a wholesale section for brands and resellers |
 
-A dynamic personal portfolio that showcases my skills, projects, and passion for technology. Built with a modern, performance-first stack and crafted to feel as much like a product as it does a resume.
+## What a customer can do
 
-```
- ┌──────────────────────────────────────────────┐
- │   React + Vite · Tailwind · Framer Motion    │
- │                                              |
- └──────────────────────────────────────────────┘
-```
-
----
-
-## ✨ Features
-
-| | Feature | Description |
+| Browse | Choose | Order |
 |---|---|---|
-| 🎬 | **Interactive Hero** | Dynamic welcome screen with self-typing effect and subtle parallax |
-| 🧩 | **Creative About Me** | Interactive 3D photo gallery and skill cards with advanced hover states |
-| 📊 | **Dynamic Skills Display** | Skills grouped by category with animated visualization and creative filters |
-| 🗂️ | **Filterable Projects** | Professional project gallery with interactive card animations |
-| 📱 | **Fully Responsive** | Optimized for every device — mobile, tablet, and desktop |
-| 🔄 | **Auto Copyright** | Footer year updates automatically — zero manual maintenance |
-| ⬆️ | **Smooth Navigation** | Back-to-top button and fluid internal anchor links |
+| <img src="docs/catalog.jpg" alt="Catalog with filters" width="280" /> | <img src="docs/sheet.jpg" alt="Product details" width="280" /> | <img src="docs/mobile.jpg" alt="Mobile view" width="160" /> |
+| Filter by style (sandals, flats, heels…) or "new", and sort by price or name | Pick color and size, see material and origin, save favorites, share the product | Review the bag, see shipping, and send the order to Johana on WhatsApp in one tap |
 
----
+## How an order works
 
-## 🚀 Tech Stack
+There is no payment gateway on purpose. The business already closes sales over WhatsApp, so the site's job is to deliver a complete, correctly formatted order to that conversation.
 
-<table>
-  <tr>
-    <td align="center" width="120">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" /><br>
-      <b>React</b><br>
-      <sub>UI Library</sub>
-    </td>
-    <td align="center" width="120">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" width="40" height="40" /><br>
-      <b>Vite</b><br>
-      <sub>Build Tool</sub>
-    </td>
-    <td align="center" width="120">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" width="40" height="40" /><br>
-      <b>Tailwind</b><br>
-      <sub>Styling</sub>
-    </td>
-    <td align="center" width="120">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg" width="40" height="40" /><br>
-      <b>Framer Motion</b><br>
-      <sub>Animations</sub>
-    </td>
-    <td align="center" width="120">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40" height="40" /><br>
-      <b>Zustand</b><br>
-      <sub>State</sub>
-    </td>
-    <td align="center" width="120">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40" height="40" /><br>
-      <b>Lucide</b><br>
-      <sub>Icons</sub>
-    </td>
-  </tr>
-</table>
+```mermaid
+flowchart LR
+    A[Customer browses<br/>the catalog] --> B[Picks color<br/>and size]
+    B --> C[Adds to bag]
+    C --> D{Subtotal ≥<br/>COP 250,000?}
+    D -- yes --> E[Free shipping]
+    D -- no --> F[COP 15,000 shipping]
+    E --> G[Order message is built:<br/>items, sizes, totals]
+    F --> G
+    G --> H[Opens WhatsApp<br/>with Johana]
+    H --> I[Johana confirms<br/>payment and delivery]
+```
 
-> **React** powers the UI · **Vite** delivers near-instant HMR · **Tailwind** keeps styling consistent · **Framer Motion** handles every animation · **Zustand** manages global state with minimal boilerplate · **Lucide React** provides the icon set.
+The message that arrives looks like this:
 
----
+```text
+Hola Johana, quiero hacer este pedido en Marsupial:
 
-## ⚙️ Setup & Installation
+• 1 x Bailarina Socorrita (REF-3862) · Verde Pino · Talla 37 — $ 149.900
+• 1 x Cuña Athina Miel (REF-3887) · Miel · Talla 38 — $ 209.900
 
-### Prerequisites
+Subtotal: $ 359.800
+Envío: Gratis
+Total: $ 359.800
+```
 
-- [Node.js](https://nodejs.org/) **v18+**
-- npm, yarn, or pnpm
+## Keeping it up to date (no developer needed)
 
-### Quick Start
+<details>
+<summary><b>Add or edit a product</b></summary>
+
+<br/>
+
+All products live in one file: [`src/data/productos.json`](src/data/productos.json). Add an entry, upload the photo to `public/productos/zapatos/`, and push. Vercel redeploys automatically.
+
+```json
+{
+  "id": "ref-3862",
+  "referencia": "REF-3862",
+  "nombre": "Bailarina Socorrita",
+  "categoria": "zapatos",
+  "subcategoria": "sandalias",
+  "descripcion": "Sandalia plana.",
+  "precio": 149900,
+  "colores": [{ "nombre": "Verde Pino", "hex": "#01796F" }],
+  "tallas": [35, 36, 37, 38, 39, 40],
+  "material": "Cuero natural",
+  "destacado": true,
+  "nuevo": false,
+  "fotos": ["/productos/zapatos/socorritas.jpeg"]
+}
+```
+
+| Field | What it controls |
+|---|---|
+| `precio` | Price in COP. Leave it out to show "Consultar" instead |
+| `subcategoria` | Which filter tab the product appears under |
+| `destacado` | Shows the product in the home page carousel |
+| `nuevo` | Adds the "Nuevo" badge and the "Nuevos" filter |
+
+</details>
+
+<details>
+<summary><b>Change the WhatsApp number or shipping rules</b></summary>
+
+<br/>
+
+Everything is in [`src/lib/shop.js`](src/lib/shop.js):
+
+```js
+export const WHATSAPP_NUMBER = "573174385716"; // where orders are sent
+export const ENVIO_GRATIS_DESDE = 250000;      // free shipping from this subtotal (COP)
+export const COSTO_ENVIO = 15000;              // shipping cost below that
+```
+
+</details>
+
+## Under the hood
+
+<details>
+<summary><b>Tech stack and why</b></summary>
+
+<br/>
+
+| Layer | Choice | Why |
+|---|---|---|
+| UI | React 18 + Vite | Fast builds and instant local reloads for a small, content-heavy site |
+| Styling | Tailwind CSS v4 | One consistent visual system across the store and the brand sections |
+| State | Zustand (+ `persist`) | Cart and favorites survive a page reload with a tiny store and no boilerplate |
+| Motion | Framer Motion | Product sheet, bag drawer and carousel transitions, with reduced-motion respected |
+| Forms | React Hook Form + Zod + Formspree | Validated contact form without running a backend |
+| Hosting | Vercel | Every push to `main` is live in about a minute |
+
+</details>
+
+<details>
+<summary><b>Engineering decisions</b></summary>
+
+<br/>
+
+- **No backend, no database.** The catalog is a versioned JSON file. For 8–50 products this is simpler, free to host, and every change is reviewable in Git.
+- **WhatsApp instead of a payment gateway.** It matches how the business already sells and avoids processing fees and card handling.
+- **Cart keyed by product + color + size.** The same shoe in two sizes becomes two lines, which is exactly what the workshop needs to fulfill the order.
+- **Persistent cart.** Stored in `localStorage` under `marsupial-shop`, so customers who leave and come back don't lose their bag.
+- **Native share.** The product sheet uses the Web Share API on phones, so customers can send a shoe to a friend through any app.
+- **3D carousel without a 3D engine.** The home carousel is built with CSS transforms and pointer events (drag to rotate, tap to open), so it stays light on mobile.
+
+</details>
+
+<details>
+<summary><b>Project structure</b></summary>
+
+<br/>
+
+```
+src/
+├── pages/                 Home and 404
+├── components/
+│   ├── shop/              Header, 3D carousel, catalog, product sheet, bag drawer, footer
+│   ├── ContactSection     Validated contact form (Formspree)
+│   └── PartnersSection    Wholesale and brand partners
+├── data/productos.json    The whole catalog
+├── lib/shop.js            Prices, shipping rules, WhatsApp order message
+└── shopStore.js           Cart, favorites and UI state (Zustand)
+public/productos/          Product photos
+```
+
+</details>
+
+<details>
+<summary><b>Run it locally</b></summary>
+
+<br/>
+
+Requires Node.js 18+.
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Santi2307/santi-portafolio.git
-
-# 2. Enter the project directory
-cd santi-portafolio
-
-# 3. Install dependencies
+git clone https://github.com/Santi2307/johana-marsupial-portfolio.git
+cd johana-marsupial-portfolio
 npm install
-
-# 4. Start the development server
-npm run dev
+npm run dev        # http://localhost:5173
 ```
 
-Then open **http://localhost:5173** in your browser. 🚀
+`npm run build` creates the production bundle; `npm run preview` serves it.
 
-> ⚠️ **Note:** Avoid running `npm install` with `sudo` — it can cause permission issues. If you hit `EACCES` errors, fix npm's global directory permissions instead.
-
-### Build for Production
-
-```bash
-npm run build      # bundle for production
-npm run preview    # locally preview the production build
-```
+</details>
 
 ---
 
-## 📂 Project Structure
-
-```
-santi-portafolio/
-├── public/              # Static assets
-├── src/
-│   ├── components/      # Reusable UI components
-│   ├── sections/        # Hero, About, Skills, Projects, Footer
-│   ├── store/           # Zustand state slices
-│   ├── data/            # Skills, projects, content
-│   ├── hooks/           # Custom React hooks
-│   ├── App.jsx          # Root component
-│   └── main.jsx         # Entry point
-├── index.html
-├── tailwind.config.js
-├── vite.config.js
-└── package.json
-```
-
----------------------------------------------------------  Signature by Santiago ---------------------------------------------------------
-
-<sub>© Santiago Delgado · Computer Systems Technology Graduate · Seneca Polytechnic</sub>
-
+<div align="center">
+<sub>Built by <a href="https://santi-portafolio.vercel.app">Santiago Delgado</a> · Product photos and brand © Marsupial · Johana Sánchez Pulido</sub>
 </div>
